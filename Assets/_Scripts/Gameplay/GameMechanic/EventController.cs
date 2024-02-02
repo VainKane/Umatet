@@ -42,8 +42,6 @@ public class EventController : MonoBehaviour
 
         isLuckyEnvelope1Hiden = false;
         isLuckyEnvelope2Hiden = false;
-
-        Debug.Log("bruh");
     }
 
     // Update is called once per frame
