@@ -21,8 +21,6 @@ TagManager:
   - Container (b)
   - Container (c)
   - Container (d)
-  - LuckyEnvelope (1)
-  - LuckyEnvelope (2)
   layers:
   - Default
   - TransparentFX
