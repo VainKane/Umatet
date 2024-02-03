@@ -31,13 +31,6 @@ public class Spawner : MonoBehaviour
 
         radius = 65f;
 
-        if (obj.name == "Container (a)" || obj.name == "Container (d)")
-        {
-            radius = 50f;
-        }
-
-
-
         minX = buttonPosX - radius;
         maxX = buttonPosX + radius;
         minY = buttonPosY - radius;
@@ -50,7 +43,7 @@ public class Spawner : MonoBehaviour
             minY = buttonPosY - 50;
             maxY = buttonPosY + 50;
         }
-        if (obj.name == "Container (6)" || obj.name == "Container (12)")
+        else if (obj.name == "Container (6)" || obj.name == "Container (12)")
         {
             minX = buttonPosX - 55;
             maxX = buttonPosX + 55;
@@ -58,8 +51,7 @@ public class Spawner : MonoBehaviour
             maxY = buttonPosY + 120;
         }
 
-
-        if (obj.name != "Container (6)" && obj.name != "Container (12)" && obj.name != "Container (a)" && obj.name != "Container (b)" && obj.name != "Container (c)" && obj.name != "Container (d)")
+        else
         {
             for (int i = 0; i < 5; i++)
             {
