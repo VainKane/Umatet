@@ -95,6 +95,7 @@ public class EventController : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         isAcceptedToPlay = true;
     }
+
     IEnumerator WhenPlayer2Turn(GameObject caller)
     {
         coins = GameObject.FindGameObjectWithTag(caller.name).GetComponent<Counter>().coins;
@@ -111,6 +112,7 @@ public class EventController : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         isAcceptedToPlay = true;
     }
+
     public void InfomationUpdater()
     {
         if (playerTurn == "player 1")
@@ -127,6 +129,7 @@ public class EventController : MonoBehaviour
             keyDecreasingContainerSequence = KeyCode.LeftArrow;
         }
     }
+
     void OtherFunctionsController()
     {
         player1Infomation.text = player1Name + "\n" + "Handing " + player1CoinsInHandCounter;
