@@ -95,6 +95,7 @@ public class Spawner : MonoBehaviour
         {
             Destroy(obj.GetComponent<Counter>().coins[coinSequence]);
             obj.GetComponent<Counter>().coinsCounter -= 1;
+            obj.GetComponent<Counter>().coins.Remove(obj.GetComponent<Counter>().coins[coinSequence]);
         }
         else
         {
