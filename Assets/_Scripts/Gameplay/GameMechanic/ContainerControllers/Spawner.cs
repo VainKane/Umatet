@@ -69,18 +69,28 @@ public class Spawner : MonoBehaviour
 
     public void CoinsSpawner()
     {
-        coinPosition = new Vector2(UnityEngine.Random.Range(minX, maxX), UnityEngine.Random.Range(minY, maxY));
+        if (obj.name == "Container (b)" || obj.name == "Container (c)")
+        {
+            Debug.LogError("Container (b) and Container (c) shouldn't use this method");
+        }
+        else
+        {
+            coinPosition = new Vector2(UnityEngine.Random.Range(minX, maxX), UnityEngine.Random.Range(minY, maxY));
 
-        GameObject uiInstance = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
-        uiInstance.transform.SetParent(transform);
-
+            GameObject uiInstance = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
+            uiInstance.transform.SetParent(transform);
+        }
     }
 
     public void CoinsEarner()
     {
         if (obj.name == "Container (b)" || obj.name == "Container (c)")
         {
-            CoinsSpawner();
+            coinPosition = new Vector2(UnityEngine.Random.Range(minX, maxX), UnityEngine.Random.Range(minY, maxY));
+
+            GameObject uiInstance = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
+            uiInstance.transform.SetParent(transform);
+
             obj.GetComponent<Counter>().coinsCounter += 1;
         }
         else
@@ -89,13 +99,13 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    public void CoinsDestroyer(int coinSequence)
+    public void CoinsDestroyer()
     {
         if (obj.name == "Container (b)" || obj.name == "Container (c)")
         {
-            Destroy(obj.GetComponent<Counter>().coins[coinSequence]);
+            Destroy(obj.GetComponent<Counter>().coins[0]);
             obj.GetComponent<Counter>().coinsCounter -= 1;
-            obj.GetComponent<Counter>().coins.Remove(obj.GetComponent<Counter>().coins[coinSequence]);
+            obj.GetComponent<Counter>().coins.Remove(obj.GetComponent<Counter>().coins[0]);
         }
         else
         {
