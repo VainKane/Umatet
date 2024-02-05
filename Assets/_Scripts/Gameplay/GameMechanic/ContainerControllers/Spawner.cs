@@ -55,7 +55,7 @@ public class Spawner : MonoBehaviour
         {
             for (int i = 0; i < 5; i++)
             {
-                CoinSpawner();
+                CoinsSpawner();
             }
         }
 
@@ -67,11 +67,39 @@ public class Spawner : MonoBehaviour
 
     }
 
-    public void CoinSpawner()
+    public void CoinsSpawner()
     {
         coinPosition = new Vector2(UnityEngine.Random.Range(minX, maxX), UnityEngine.Random.Range(minY, maxY));
 
         GameObject uiInstance = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
         uiInstance.transform.SetParent(transform);
+
+    }
+
+    public void CoinsEarner()
+    {
+        if (obj.name == "Container (b)" || obj.name == "Container (c)")
+        {
+            CoinsSpawner();
+            obj.GetComponent<Counter>().coinsCounter += 1;
+        }
+        else
+        {
+            Debug.LogError("Only 'Container (b)' and 'Container (c)' can use 'CoinsEarner'");
+        }
+    }
+
+    public void CoinsDestroyer(int coinSequence)
+    {
+        if (obj.name == "Container (b)" || obj.name == "Container (c)")
+        {
+            Destroy(obj.GetComponent<Counter>().coins[coinSequence]);
+            obj.GetComponent<Counter>().coinsCounter -= 1;
+        }
+        else
+        {
+            Debug.LogError("Only 'Container (b)' and 'Container (c)' can use 'CoinsEarner'");
+        }
+
     }
 }

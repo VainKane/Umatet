@@ -28,7 +28,7 @@ public class EventController : MonoBehaviour
 
     public GameObject luckyEnvelope1;
     public GameObject luckyEnvelope2;
-    public GameObject messange;
+    public GameObject messangePanel;
     public Text textReward;
 
     public Text player1Infomation;
@@ -40,6 +40,19 @@ public class EventController : MonoBehaviour
 
     string player1Name;
     string player2Name;
+
+    public bool isAcceptedToClick;
+
+    public GameObject gameOverPanel;
+    public Text player1InfomationText;
+    public Text player2InfomationText;
+
+    private bool isGameOver;
+
+    //public GameObject selection;
+
+    int player1Loan;
+    int player2Loan;
 
     // Start is called before the first frame update
     void Start()
@@ -54,11 +67,21 @@ public class EventController : MonoBehaviour
 
         isLuckyEnvelope1Hiden = false;
         isLuckyEnvelope2Hiden = false;
-         
-        messange.SetActive(false);
+
+        messangePanel.SetActive(false);
 
         player1Name = "Vain_Kane";
         player2Name = "Charles_Kaya";
+
+        isAcceptedToClick = true;
+
+        gameOverPanel.SetActive(false);
+        isGameOver = false;
+
+        //selection.SetActive(false);
+
+        player1Loan = 0;
+        player2Loan = 0;
     }
 
     // Update is called once per frame
@@ -68,6 +91,8 @@ public class EventController : MonoBehaviour
         playerInteractionDetector();
         OtherFunctionsController();
 
+
+        
     }
 
     public void Player1ClickReceiver(GameObject caller)
@@ -94,6 +119,10 @@ public class EventController : MonoBehaviour
         coins.Clear();
         yield return new WaitForSeconds(0.1f);
         isAcceptedToPlay = true;
+        //selection.SetActive(true);
+        //selection.transform.position = caller.transform.position;
+
+        
     }
 
     IEnumerator WhenPlayer2Turn(GameObject caller)
@@ -108,9 +137,13 @@ public class EventController : MonoBehaviour
         }
         coinsCounter = coins.Count;
         player2CoinsInHandCounter = coins.Count;
+
         coins.Clear();
         yield return new WaitForSeconds(0.1f);
         isAcceptedToPlay = true;
+
+        //selection.SetActive(true);
+        //selection.transform.position = caller.transform.position;
     }
 
     public void InfomationUpdater()
@@ -132,8 +165,8 @@ public class EventController : MonoBehaviour
 
     void OtherFunctionsController()
     {
-        player1Infomation.text = player1Name + "\n" + "Handing " + player1CoinsInHandCounter;
-        player2Infomation.text = player2Name + "\n" + "Handing " + player2CoinsInHandCounter;
+        player1Infomation.text = player1Name + "\nHanding " + player1CoinsInHandCounter + "\nLoan: " + player1Loan;
+        player2Infomation.text = player2Name + "\nHanding " + player2CoinsInHandCounter + "\nLoan: " + player2Loan;
 
         if (playerTurn == "player 2")
         {
@@ -165,80 +198,121 @@ public class EventController : MonoBehaviour
         }
     }
 
+    IEnumerator LuckyEnvelopeEarner(string containerName)
+    {
+        GameObject luckyEnvelope;
+
+        if (containerName == "Container (6)")
+        {
+            luckyEnvelope = luckyEnvelope1;
+        }
+        else
+        {
+            luckyEnvelope = luckyEnvelope2;
+        }
+
+
+        yield return new WaitForSeconds(0.85f);
+
+        luckyEnvelope.SetActive(false);
+        messangePanel.SetActive(true);
+        int value;
+
+        for (int i = 0; i <= 50; i++)
+        {
+            value = UnityEngine.Random.Range(5, 12);
+            textReward.text = "= " + value;
+            yield return new WaitForSeconds(0.1f);
+
+        }
+
+        value = UnityEngine.Random.Range(5, 12);
+        textReward.text = "= " + value;
+        yield return new WaitForSeconds(1.5f);
+
+        for (int i = 0; i < value; i++)
+        {
+            GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinsEarner();
+        }
+
+        messangePanel.SetActive(false);
+    }
+
     IEnumerator CoinsEarner(string moveChoice, int earnedContainerSequence)
     {
         List<GameObject> earnedCoinsList = GameObject.FindGameObjectWithTag("Container (" + earnedContainerSequence + ")").GetComponent<Counter>().coins;
-        if (moveChoice == "go up")
+
+        if (earnedCoinsList.Count != 0)
         {
-            if (earnedCoinsList.Count != 0)
+            
+            if (earnedContainerSequence == 6 || earnedContainerSequence == 12)
+            {
+                if (GameObject.FindGameObjectWithTag("Container (6)").GetComponent<Counter>().coins.Count >= 5)
+                {
+                    if (isLuckyEnvelope1Hiden == false)
+                    {
+                        isLuckyEnvelope1Hiden = true;
+                        for (int i = 0; i < earnedCoinsList.Count; i++)
+                        {
+                            Destroy(earnedCoinsList[i]);
+                            GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinsEarner();
+                        }
+                        earnedCoinsList.Clear();
+
+                        StartCoroutine(LuckyEnvelopeEarner("Container (6)"));
+                        yield return new WaitForSeconds(8.5f);
+                    }
+                }
+
+                if (GameObject.FindGameObjectWithTag("Container (12)").GetComponent<Counter>().coins.Count >= 5)
+                {
+                    if (isLuckyEnvelope2Hiden == false)
+                    {
+                        isLuckyEnvelope2Hiden = true;
+                        for (int i = 0; i < earnedCoinsList.Count; i++)
+                        {
+                            Destroy(earnedCoinsList[i]);
+                            GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinsEarner();
+                        }
+                        earnedCoinsList.Clear();
+
+                        StartCoroutine(LuckyEnvelopeEarner("Container (12)"));
+                        yield return new WaitForSeconds(8.5f);
+                    }
+                }
+                if (isLuckyEnvelope1Hiden == true)
+                {
+                    for (int i = 0; i < earnedCoinsList.Count; i++)
+                    {
+                        Destroy(earnedCoinsList[i]);
+                        GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinsEarner();
+                    }
+                    earnedCoinsList.Clear();
+                }
+                if (isLuckyEnvelope2Hiden == true)
+                {
+                    for (int i = 0; i < earnedCoinsList.Count; i++)
+                    {
+                        Destroy(earnedCoinsList[i]);
+                        GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinsEarner();
+                    }
+                    earnedCoinsList.Clear();
+                }
+            }
+            else
             {
                 for (int i = 0; i < earnedCoinsList.Count; i++)
                 {
                     Destroy(earnedCoinsList[i]);
-                    GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinSpawner();
-                    GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter += 1;
+                    GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinsEarner();
                 }
                 earnedCoinsList.Clear();
+            }
 
-                if (GameObject.FindGameObjectWithTag("Container (" + earnedContainerSequence + ")").name == "Container (6)")
-                {
-                    if (isLuckyEnvelope1Hiden == false)
-                    {
-                        yield return new WaitForSeconds(0.85f);
 
-                        luckyEnvelope1.SetActive(false);
-                        messange.SetActive(true);
-                        int value;
-                        for (int i = 0; i <= 50; i++)
-                        {
-                            value = UnityEngine.Random.Range(5, 12);
-                            textReward.text = "= " + value;
-                            yield return new WaitForSeconds(0.95f);
 
-                        }
-                        value = UnityEngine.Random.Range(5, 12);
-                        textReward.text = "= " + value;
-                        yield return new WaitForSeconds(1.5f);
-                        for (int i = 0; i < value - 3; i++)
-                        {
-                            GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinSpawner();
-                        }
-                        messange.SetActive(false);
-                        isLuckyEnvelope1Hiden = true;
-                    }
-                }
-                if (GameObject.FindGameObjectWithTag("Container (" + earnedContainerSequence + ")").name == "Container (12)")
-                {
-                    if (isLuckyEnvelope2Hiden == false)
-                    {
-                        yield return new WaitForSeconds(0.85f);
-
-                        luckyEnvelope2.SetActive(false);
-                        messange.SetActive(true);
-                        int value;
-
-                        for (int i = 0; i <= 50; i++)
-                        {
-                            value = UnityEngine.Random.Range(5, 12);
-                            textReward.text = "= " + value;
-                            yield return new WaitForSeconds(0.1f);
-
-                        }
-
-                        value = UnityEngine.Random.Range(5, 12);
-                        textReward.text = "= " + value;
-                        yield return new WaitForSeconds(1.5f);
-
-                        for (int i = 0; i < value; i++)
-                        {
-                            GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinSpawner();
-                            GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter += 1;
-                        }
-                        messange.SetActive(false);
-                        isLuckyEnvelope2Hiden = true;
-                    }
-                }
-
+            if (moveChoice == "go up")
+            {
                 if (earnedContainerSequence + 1 == 13)
                 {
                     earnedContainerSequence = 0;
@@ -254,84 +328,8 @@ public class EventController : MonoBehaviour
                     PlayerTurnChanger(playerTurn);
                 }
             }
-            else 
-            { 
-                PlayerTurnChanger(playerTurn);
-            }
-
-        }
-        if (moveChoice == "go down")
-        {
-            if (earnedCoinsList.Count != 0)
+            if (moveChoice == "go down")
             {
-                for (int i = 0; i < earnedCoinsList.Count; i++)
-                {
-                    Destroy(earnedCoinsList[i]);
-                    GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinSpawner();
-                    GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter += 1;
-
-                }
-                earnedCoinsList.Clear();
-
-                if (GameObject.FindGameObjectWithTag("Container (" + earnedContainerSequence + ")").name == "Container (6)")
-                {
-                    if (isLuckyEnvelope1Hiden == false)
-                    {
-                        yield return new WaitForSeconds(0.85f);
-
-                        luckyEnvelope1.SetActive(false);
-                        messange.SetActive(true);
-                        int value;
-
-                        for (int i = 0; i <= 30; i++)
-                        {
-                            value = UnityEngine.Random.Range(5, 12);
-                            textReward.text = "= " + value;
-                            yield return new WaitForSeconds(0.1f);
-
-                        }
-                        value = UnityEngine.Random.Range(5, 12);
-                        textReward.text = "= " + value;
-                        yield return new WaitForSeconds(3.5f);
-
-                        for (int i = 0; i < value; i++)
-                        {
-                            GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinSpawner();
-                            GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter += 1;
-
-                        }
-                        messange.SetActive(false);
-                        isLuckyEnvelope1Hiden = true;
-                    }
-                }
-                if (GameObject.FindGameObjectWithTag("Container (" + earnedContainerSequence + ")").name == "Container (12)")
-                {
-                    if (isLuckyEnvelope2Hiden == false)
-                    {
-                        yield return new WaitForSeconds(0.85f);
-
-                        luckyEnvelope2.SetActive(false);
-                        messange.SetActive(true);
-                        int value;
-                        for (int i = 0; i <= 30; i++)
-                        {
-                            value = UnityEngine.Random.Range(5, 12);
-                            textReward.text = "= " + value;
-                            yield return new WaitForSeconds(0.1f);
-
-                        }
-                        value = UnityEngine.Random.Range(5, 12);
-                        textReward.text = "= " + value;
-                        yield return new WaitForSeconds(3.5f);
-                        for (int i = 0; i < value - 3; i++)
-                        {
-                            GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinSpawner();
-                        }
-                        messange.SetActive(false);
-                        isLuckyEnvelope2Hiden = true;
-                    }
-                }
-
                 if (earnedContainerSequence - 1 == 0)
                 {
                     earnedContainerSequence = 13;
@@ -346,68 +344,143 @@ public class EventController : MonoBehaviour
                     PlayerTurnChanger(playerTurn);
                 }
             }
-            else
+        }
+        else
+        {
+            PlayerTurnChanger(playerTurn);
+        }
+    }
+
+    IEnumerator GameOverChecker()
+    {
+        if (GameObject.FindGameObjectWithTag("Container (6)").GetComponent<Counter>().coins.Count == 0 && GameObject.FindGameObjectWithTag("Container (12)").GetComponent<Counter>().coins.Count == 0)
+        {
+            yield return new WaitForSeconds(1.5f);
+            isGameOver = true;
+            for (int i = 1; i <= 5; i++)
             {
-                PlayerTurnChanger(playerTurn);
+                for (int n = 0; n < GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins.Count; n++)
+                {
+                    Destroy(GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins[n]);
+                    GameObject.FindGameObjectWithTag("Container (c)").GetComponent<Spawner>().CoinsEarner();
+                }
+                GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins.Clear();
+
+            }
+            for (int i = 7; i <= 11; i++)
+            {
+                for (int n = 0; n < GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins.Count; n++)
+                {
+                    Destroy(GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins[n]);
+                    GameObject.FindGameObjectWithTag("Container (b)").GetComponent<Spawner>().CoinsEarner();
+
+                }
+                GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins.Clear();
+
+            }
+
+            yield return new WaitForSeconds(1.5f);
+            gameOverPanel.SetActive(true);
+            player1InfomationText.text = player1Name + "'s" + " Score: " + GameObject.FindGameObjectWithTag("Container (c)").GetComponent<Counter>().coinsCounter;
+            player2InfomationText.text = player2Name + "'s" + " Score: " + GameObject.FindGameObjectWithTag("Container (b)").GetComponent<Counter>().coinsCounter;
+        }
+    }
+
+    IEnumerator EmptyContainersChecker(string playerTurn)
+    {
+        isPlaying = true;
+        isAcceptedToClick = false;
+
+        string earnedCoins;
+        int firstContainerSequence;
+        int lastContainerSequence;
+
+        if (playerTurn == "player 2")
+        {
+            earnedCoins = "Container (b)";
+            firstContainerSequence = 7;
+            lastContainerSequence = 11;
+
+        }
+        else
+        {
+            earnedCoins = "Container (c)";
+            firstContainerSequence = 1;
+            lastContainerSequence = 5;
+        }
+
+        int amountOfEmptyContainers = 0;
+        for (int i = firstContainerSequence; i <= lastContainerSequence; i++)
+        {
+            if (GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins.Count == 0)
+            {
+                amountOfEmptyContainers += 1;
             }
         }
 
+
+        if (amountOfEmptyContainers == 5)
+        {
+            if (GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter < 5)
+            {
+                if (playerTurn == "player1")
+                {
+                    player1Loan += 5 - GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter;
+                }
+                else
+                {
+                    player2Loan += 5 - GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter;
+                }
+
+                for (int i = 0; i < 5 - GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter; i++)
+                {
+                    GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinsSpawner();
+                }
+            }
+
+            if (GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter >= 5)
+            {
+                int coinConsequence = -1;
+                for (int i = firstContainerSequence; i <= lastContainerSequence; i++)
+                {
+                    yield return new WaitForSeconds(0.25f);
+                    coinConsequence += 1;
+                    GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Spawner>().CoinsSpawner();
+
+                    GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinsDestroyer(coinConsequence);
+                }
+            }
+        }
+
+
+        isPlaying = false;
+        isAcceptedToClick = true;
     }
 
     void PlayerTurnChanger(string playerTurn)
     {
-        if (GameObject.FindGameObjectWithTag("Container (6)").GetComponent<Counter>().coins.Count == 0 && GameObject.FindGameObjectWithTag("Container (12)").GetComponent<Counter>().coins.Count == 0)
-        {
-            Debug.Log("gameover!");
-        }
+        StartCoroutine(GameOverChecker());
+
         player2CoinsInHandCounter = 0;
         player1CoinsInHandCounter = 0;
+
         if (playerTurn == "player 1")
         {
             this.playerTurn = "player 2";
-
-            int amountOfEmptyContainers = 0;
-            for (int i = 7; i <= 11; i++)
+            if (isGameOver == false)
             {
-                if (GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins.Count == 0)
-                {
-                    amountOfEmptyContainers += 1;
-                }
-            }
-
-            if (amountOfEmptyContainers == 5)
-            {
-                for (int i = 7; i <= 11; i++)
-                {
-                    GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Spawner>().CoinSpawner();
-                    Destroy(GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coins[i]);
-                    GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter -= 1;
-                }
+                StartCoroutine(EmptyContainersChecker(this.playerTurn));
             }
         }
         else
         {
             this.playerTurn = "player 1";
-
-            int amountOfEmptyContainers = 0;
-            for (int i = 1; i <= 5; i++)
+            if (isGameOver == false)
             {
-                if (GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins.Count == 0)
-                    amountOfEmptyContainers += 1;
+                StartCoroutine(EmptyContainersChecker(this.playerTurn));
             }
-            if (amountOfEmptyContainers == 5)
-            {
-                for (int i = 1; i <= 5; i++)
-                {
-                    GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Spawner>().CoinSpawner();
-                    Destroy(GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coins[i]);
-                    GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter -= 1;
-                }
-
-            }
-
         }
-        
+
         isPlaying = false;
     }
 
@@ -430,8 +503,6 @@ public class EventController : MonoBehaviour
                 for (int i = 1; i < coinsCounter + 1; i++)
                 {
                     containerSequence += 1;
-                   
-
                     if (containerSequence > 12)
                     {
                     isContainerSequenceHigherThan12:
@@ -454,7 +525,7 @@ public class EventController : MonoBehaviour
                             }
                             else
                             {
-                                GameObject.FindGameObjectWithTag("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinSpawner();
+                                GameObject.FindGameObjectWithTag("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
                                 yield return new WaitForSeconds(delayTime);
 
                             }
@@ -475,11 +546,11 @@ public class EventController : MonoBehaviour
                             player2CoinsInHandCounter -= 1;
                         }
 
-                        GameObject.FindGameObjectWithTag("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinSpawner();
+                        GameObject.FindGameObjectWithTag("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
                         yield return new WaitForSeconds(delayTime);
 
                     }
-                    
+
                 }
 
                 isPlaying = false;
@@ -502,7 +573,7 @@ public class EventController : MonoBehaviour
                 for (int i = 1; i < coinsCounter + 1; i++)
                 {
                     containerSequence -= 1;
-                    
+
                     if (containerSequence < 1)
                     {
                     isContainerSequenceLowerThan1:
@@ -524,7 +595,7 @@ public class EventController : MonoBehaviour
                             }
                             else
                             {
-                                GameObject.FindGameObjectWithTag("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinSpawner();
+                                GameObject.FindGameObjectWithTag("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
                                 yield return new WaitForSeconds(delayTime);
 
                             }
@@ -543,13 +614,13 @@ public class EventController : MonoBehaviour
                             player2CoinsInHandCounter -= 1;
                         }
 
-                        GameObject.FindGameObjectWithTag("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinSpawner();
+                        GameObject.FindGameObjectWithTag("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
                         yield return new WaitForSeconds(delayTime);
 
                     }
                 }
 
-                
+
             }
             if (containerSequence - 1 == 0)
             {
@@ -600,7 +671,7 @@ public class EventController : MonoBehaviour
                     coins.Clear();
                     yield return new WaitForSeconds(0.85f);
                     isPlaying = false;
-                    
+
                     StartCoroutine(UsingTurn(moveChoice, nextContainerSequence, n));
                 }
             }

@@ -27,7 +27,10 @@ public class ButtonController : MonoBehaviour
             {
                 if (gameController.GetComponent<EventController>().isPlaying == false)
                 {
-                    gameController.GetComponent<EventController>().Player2ClickReceiver(obj);
+                    if (gameController.GetComponent<EventController>().isAcceptedToClick == true)
+                    { 
+                        gameController.GetComponent<EventController>().Player2ClickReceiver(obj);
+                    }
                 }
             }
         if (obj.name == "Container (1)" || obj.name == "Container (2)" || obj.name == "Container (3)" || obj.name == "Container (4)" || obj.name == "Container (5)")
@@ -36,7 +39,10 @@ public class ButtonController : MonoBehaviour
             {
                 if (gameController.GetComponent<EventController>().isPlaying == false)
                 {
-                    gameController.GetComponent<EventController>().Player1ClickReceiver(obj);
+                    if (gameController.GetComponent<EventController>().isAcceptedToClick == true)
+                    {
+                        gameController.GetComponent<EventController>().Player1ClickReceiver(obj);
+                    }
                 }
             }
 
