@@ -5,22 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Coin
-  - Container (1)
-  - Container (2)
-  - Container (3)
-  - Container (4)
-  - Container (5)
-  - Container (6)
-  - Container (7)
-  - Container (8)
-  - Container (9)
-  - Container (10)
-  - Container (11)
-  - Container (12)
-  - Container (a)
-  - Container (b)
-  - Container (c)
-  - Container (d)
   layers:
   - Default
   - TransparentFX

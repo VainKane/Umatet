@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 175856167}
   m_Layer: 5
   m_Name: Container (9)
-  m_TagString: Container (9)
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -448,7 +448,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 175856171}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: WhenClicking
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -649,7 +649,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "1234567890123\nHanding: 00 \nLoan: 00\n"
+  m_Text: "1234567890123\nHand: 00 \nLoan: 00\n"
 --- !u!222 &266707698
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -677,7 +677,7 @@ GameObject:
   - component: {fileID: 270279289}
   m_Layer: 5
   m_Name: Container (12)
-  m_TagString: Container (12)
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -835,9 +835,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 270279293}
+      - m_Target: {fileID: 11500000, guid: 3ea5fc5388ff52d48a78b2877152aa9b, type: 3}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: WhenClicking
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -885,6 +885,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 270279287}
   m_CullTransparentMesh: 1
+--- !u!1 &271415222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 271415223}
+  m_Layer: 0
+  m_Name: Controllers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &271415223
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271415222}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &299863627
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,6 +946,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingPanel: {fileID: 339331192}
+  gameOverPanel: {fileID: 387463636}
+  player1Score: {fileID: 586569211}
+  player2Score: {fileID: 954555380}
+  redFlag: {fileID: 589075893}
+  blueFlag: {fileID: 1496171463}
+  player1Infomation: {fileID: 266707697}
+  player2Infomation: {fileID: 552075650}
+  gameController: {fileID: 435925031}
+  selection: {fileID: 1925093399}
+  messangePanel: {fileID: 1154665424}
+  textReward: {fileID: 996343712}
 --- !u!4 &299863629
 Transform:
   m_ObjectHideFlags: 0
@@ -922,7 +964,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 299863627}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -995,7 +1037,7 @@ GameObject:
   - component: {fileID: 380906191}
   m_Layer: 5
   m_Name: Container (4)
-  m_TagString: Container (4)
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1017,7 +1059,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -55.6, y: -28.9}
+  m_AnchoredPosition: {x: -55.6, y: -28.900002}
   m_SizeDelta: {x: 53, y: 53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!61 &380906191
@@ -1155,7 +1197,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 380906195}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: WhenClicking
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1268,7 +1310,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 435925031}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -5.735923, y: -2.206707, z: -4.0715895}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1288,21 +1330,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea5fc5388ff52d48a78b2877152aa9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTurn: 
-  redFlag: {fileID: 589075893}
-  blueFlag: {fileID: 1496171463}
-  isPlaying: 0
   luckyEnvelope1: {fileID: 889092032}
   luckyEnvelope2: {fileID: 1039074854}
-  messangePanel: {fileID: 1154665424}
-  textReward: {fileID: 996343712}
-  player1Infomation: {fileID: 266707697}
-  player2Infomation: {fileID: 552075650}
+  uIController: {fileID: 299863627}
+  isPlaying: 0
+  playerTurn: 
   isAcceptedToClick: 0
-  gameOverPanel: {fileID: 387463636}
-  player1InfomationText: {fileID: 586569211}
-  player2InfomationText: {fileID: 954555380}
-  selection: {fileID: 1925093399}
+  player1CoinsInHandCounter: 0
+  player2CoinsInHandCounter: 0
+  player1Loan: 0
+  player2Loan: 0
 --- !u!114 &435925034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1315,6 +1352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23010e702e7bfea42924adb0b59c9e4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameController: {fileID: 0}
 --- !u!1 &441895912
 GameObject:
   m_ObjectHideFlags: 0
@@ -1578,7 +1616,7 @@ GameObject:
   - component: {fileID: 523097969}
   m_Layer: 5
   m_Name: Container (1)
-  m_TagString: Container (1)
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1649,7 +1687,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 523097968}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: WhenClicking
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1859,7 +1897,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "1234567890123\nHanding: 00 \nLoan: 00\n"
+  m_Text: "1234567890123\nHand: 00 \nLoan: 00\n"
 --- !u!222 &552075651
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2040,7 +2078,7 @@ GameObject:
   - component: {fileID: 586569212}
   - component: {fileID: 586569211}
   m_Layer: 5
-  m_Name: Player1Infomation
+  m_Name: Player1IScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2279,7 +2317,7 @@ GameObject:
   - component: {fileID: 694822558}
   m_Layer: 5
   m_Name: Container (3)
-  m_TagString: Container (3)
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2439,7 +2477,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 694822562}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: WhenClicking
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2784,7 +2822,7 @@ RectTransform:
   - {fileID: 387463637}
   - {fileID: 339331193}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3035,7 +3073,7 @@ GameObject:
   - component: {fileID: 954555381}
   - component: {fileID: 954555380}
   m_Layer: 5
-  m_Name: Player2Information
+  m_Name: Player2Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3202,7 +3240,7 @@ GameObject:
   - component: {fileID: 1024818272}
   m_Layer: 5
   m_Name: Container (11)
-  m_TagString: Container (11)
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3362,7 +3400,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1024818276}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: WhenClicking
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3445,7 +3483,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 167.5, y: -2.5700102}
+  m_AnchoredPosition: {x: 165.29, y: 0}
   m_SizeDelta: {x: 15, y: 26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1039074856
@@ -3594,6 +3632,7 @@ RectTransform:
   m_Children:
   - {fileID: 1345792267}
   - {fileID: 996343711}
+  - {fileID: 1958349897}
   m_Father: {fileID: 880580632}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3675,7 +3714,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20.88, y: 1.87}
+  m_AnchoredPosition: {x: -34.6, y: 1.87}
   m_SizeDelta: {x: 18, y: 18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1163553188
@@ -3735,7 +3774,7 @@ GameObject:
   - component: {fileID: 1233526320}
   m_Layer: 5
   m_Name: Container (5)
-  m_TagString: Container (5)
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3895,7 +3934,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1233526324}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: WhenClicking
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3962,7 +4001,7 @@ GameObject:
   - component: {fileID: 1246208469}
   m_Layer: 5
   m_Name: Container (b)
-  m_TagString: Container (b)
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4120,7 +4159,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 11500000, guid: 3ea5fc5388ff52d48a78b2877152aa9b, type: 3}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
         m_MethodName: 
         m_Mode: 1
@@ -4425,7 +4464,7 @@ GameObject:
   - component: {fileID: 1326412366}
   m_Layer: 5
   m_Name: Container (6)
-  m_TagString: Container (6)
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4585,7 +4624,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1326412370}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: WhenClicking
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4808,7 +4847,7 @@ GameObject:
   - component: {fileID: 1365454091}
   m_Layer: 5
   m_Name: Container (2)
-  m_TagString: Container (2)
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4968,7 +5007,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1365454095}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: WhenClicking
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5035,7 +5074,7 @@ GameObject:
   - component: {fileID: 1454858697}
   m_Layer: 5
   m_Name: Container (c)
-  m_TagString: Container (c)
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5193,7 +5232,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 11500000, guid: 3ea5fc5388ff52d48a78b2877152aa9b, type: 3}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
         m_MethodName: 
         m_Mode: 1
@@ -5622,6 +5661,134 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1723240784}
   m_CullTransparentMesh: 1
+--- !u!1 &1734095408
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1734095409}
+  - component: {fileID: 1734095410}
+  m_Layer: 0
+  m_Name: AudioController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1734095409
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734095408}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1734095410
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734095408}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1740682113
 GameObject:
   m_ObjectHideFlags: 0
@@ -5721,7 +5888,7 @@ GameObject:
   - component: {fileID: 1742833689}
   m_Layer: 5
   m_Name: Container (7)
-  m_TagString: Container (7)
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5881,7 +6048,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1742833693}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: WhenClicking
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6167,13 +6334,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1958349894}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -240, y: -135, z: 0}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 1154665425}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2024999775
 GameObject:
@@ -6194,7 +6361,7 @@ GameObject:
   - component: {fileID: 2024999777}
   m_Layer: 5
   m_Name: Container (10)
-  m_TagString: Container (10)
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6354,7 +6521,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2024999781}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: WhenClicking
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6421,7 +6588,7 @@ GameObject:
   - component: {fileID: 2061484560}
   m_Layer: 5
   m_Name: Container (8)
-  m_TagString: Container (8)
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6581,7 +6748,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2061484564}
         m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: WhenClicking
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6664,7 +6831,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20.89, y: 1.82}
+  m_AnchoredPosition: {x: -34.62, y: 1.82}
   m_SizeDelta: {x: 18, y: 18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2107700763

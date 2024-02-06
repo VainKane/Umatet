@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: Vain_Kane
   productName: Umatet
-  defaultCursor: {fileID: 2800000, guid: 980435f5b374d684e9e69a3ffafaa0ad, type: 3}
+  defaultCursor: {fileID: 2800000, guid: 259c3bfbd2e6e134ebd7db9314325edf, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1

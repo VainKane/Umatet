@@ -9,50 +9,43 @@ public class EventController : MonoBehaviour
 {
     private List<GameObject> coins;
 
-    public string playerTurn;
-    private GameObject caller;
+    private GameObject container;
     private string earnedCoins;
     private float delayTime;
 
     private KeyCode keyIncreasingContainerSequence;
     private KeyCode keyDecreasingContainerSequence;
 
-    public GameObject redFlag;
-    public GameObject blueFlag;
 
-    private bool isAcceptedToPlay;
-    public bool isPlaying;
+    [Header("Playground")]
+    
+    [SerializeField] private GameObject luckyEnvelope1;
+    [SerializeField] private GameObject luckyEnvelope2;
+
+
+    [SerializeField] private GameObject uIController;
+
+    [Header("Attributes")]
+    [SerializeField] public bool isPlaying;
+    public string playerTurn;
+    public bool isAcceptedToClick;
+    
 
     private bool isLuckyEnvelope1Hiden;
     private bool isLuckyEnvelope2Hiden;
 
-    public GameObject luckyEnvelope1;
-    public GameObject luckyEnvelope2;
-    public GameObject messangePanel;
-    public Text textReward;
-
-    public Text player1Infomation;
-    public Text player2Infomation;
-    private int player1CoinsInHandCounter;
-    private int player2CoinsInHandCounter;
+    
+    public int player1CoinsInHandCounter;
+    public int player2CoinsInHandCounter;
 
     private int coinsCounter;
 
-    string player1Name;
-    string player2Name;
-
-    public bool isAcceptedToClick;
-
-    public GameObject gameOverPanel;
-    public Text player1InfomationText;
-    public Text player2InfomationText;
-
+    private bool isAcceptedToPlay;
     private bool isGameOver;
 
-    public GameObject selection;
 
-    int player1Loan;
-    int player2Loan;
+    public int player1Loan;
+    public int player2Loan;
 
     // Start is called before the first frame update
     void Start()
@@ -68,89 +61,64 @@ public class EventController : MonoBehaviour
         isLuckyEnvelope1Hiden = false;
         isLuckyEnvelope2Hiden = false;
 
-        messangePanel.SetActive(false);
-
-        player1Name = "Vain_Kane";
-        player2Name = "Charles_Kaya";
-
         isAcceptedToClick = true;
-
-        gameOverPanel.SetActive(false);
         isGameOver = false;
-
-        selection.SetActive(false);
 
         player1Loan = 0;
         player2Loan = 0;
 
+        uIController = GameObject.Find("UIController");
     }
 
     // Update is called once per frame
     void Update()
     {
-        InfomationUpdater();
+        AttributesUpdater();
         playerInteractionDetector();
-        OtherFunctionsController();
+    }
 
-        if (Input.GetKeyDown(KeyCode.K))
+    void playerInteractionDetector()
+    {
+        if (isAcceptedToPlay == true)
         {
-            GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinsDestroyer();
+            if (Input.GetKeyDown(keyIncreasingContainerSequence))
+            {
+                isAcceptedToPlay = false;
+                StartCoroutine(UsingTurn("go up", ContainerSequenceCalculator(container.name), coinsCounter));
+            }
+            if (Input.GetKey(keyDecreasingContainerSequence))
+            {
+                isAcceptedToPlay = false;
+                StartCoroutine(UsingTurn("go down", ContainerSequenceCalculator(container.name), coinsCounter));
+            }
         }
-
     }
 
-    public void Player1ClickReceiver(GameObject caller)
+    public void PlayerClickReceiver(GameObject container)
     {
-        StartCoroutine(WhenPlayer1Turn(caller));
+        StartCoroutine(ChosingContainer(container));
     }
 
-    public void Player2ClickReceiver(GameObject caller)
+    IEnumerator ChosingContainer(GameObject container)
     {
-        StartCoroutine(WhenPlayer2Turn(caller));
-    }
-
-    IEnumerator WhenPlayer1Turn(GameObject caller)
-    {
-        coins = caller.GetComponent<Counter>().coins;
-        this.caller = caller;
+        coins = container.GetComponent<Counter>().coins;
+        this.container = container;
 
         for (int i = 0; i < coins.Count; i++)
         {
             Destroy(coins[i]);
         }
+
         coinsCounter = coins.Count;
         player1CoinsInHandCounter = coins.Count;
         coins.Clear();
+        uIController.GetComponent<DisplayOnlyUIController>().SelectingContainer(container);
+
         yield return new WaitForSeconds(0.1f);
         isAcceptedToPlay = true;
-        selection.SetActive(true);
-        selection.transform.position = caller.transform.position;
-
-
     }
 
-    IEnumerator WhenPlayer2Turn(GameObject caller)
-    {
-        coins = GameObject.FindGameObjectWithTag(caller.name).GetComponent<Counter>().coins;
-        this.caller = caller;
-
-        for (int i = 0; i < coins.Count; i++)
-        {
-            Destroy(coins[i]);
-
-        }
-        coinsCounter = coins.Count;
-        player2CoinsInHandCounter = coins.Count;
-
-        coins.Clear();
-        yield return new WaitForSeconds(0.1f);
-        isAcceptedToPlay = true;
-
-        selection.SetActive(true);
-        selection.transform.position = caller.transform.position;
-    }
-
-    public void InfomationUpdater()
+    public void AttributesUpdater()
     {
         if (playerTurn == "player 1")
         {
@@ -167,49 +135,12 @@ public class EventController : MonoBehaviour
         }
     }
 
-    void OtherFunctionsController()
-    {
-        player1Infomation.text = player1Name + "\nHanding " + player1CoinsInHandCounter + "\nLoan: " + player1Loan;
-        player2Infomation.text = player2Name + "\nHanding " + player2CoinsInHandCounter + "\nLoan: " + player2Loan;
-
-        if (playerTurn == "player 2")
-        {
-            redFlag.SetActive(true);
-            blueFlag.SetActive(false);
-        }
-        if (playerTurn == "player 1")
-        {
-            redFlag.SetActive(false);
-            blueFlag.SetActive(true);
-        }
-    }
-
-    void playerInteractionDetector()
-    {
-        if (isAcceptedToPlay == true)
-        {
-            if (Input.GetKeyDown(keyIncreasingContainerSequence))
-            {
-                isAcceptedToPlay = false;
-                StartCoroutine(UsingTurn("go up", ContainerSequenceCalculator(caller.name), coinsCounter));
-
-            }
-            if (Input.GetKey(keyDecreasingContainerSequence))
-            {
-                isAcceptedToPlay = false;
-                StartCoroutine(UsingTurn("go down", ContainerSequenceCalculator(caller.name), coinsCounter));
-            }
-        }
-    }
-
     IEnumerator LuckyEnvelopeEarner(string containerName)
     {
-
         if (containerName == "Container (6)")
         {
             isLuckyEnvelope1Hiden = true;
             luckyEnvelope1.SetActive(false);
-
         }
         else
         {
@@ -220,27 +151,27 @@ public class EventController : MonoBehaviour
 
         yield return new WaitForSeconds(0.85f);
 
-        messangePanel.SetActive(true);
+        uIController.GetComponent<DisplayOnlyUIController>().messangePanel.SetActive(true);
         int value;
 
         for (int i = 0; i <= 50; i++)
         {
             value = UnityEngine.Random.Range(5, 12);
-            textReward.text = "= " + value;
+            uIController.GetComponent<DisplayOnlyUIController>().textReward.text = "= " + value;
             yield return new WaitForSeconds(0.1f);
 
         }
 
         value = UnityEngine.Random.Range(5, 12);
-        textReward.text = "= " + value;
+        uIController.GetComponent<DisplayOnlyUIController>().textReward.text = "= " + value;
         yield return new WaitForSeconds(1.5f);
 
         for (int i = 0; i < value; i++)
         {
-            GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinsEarner();
+            GameObject.Find(earnedCoins).GetComponent<Spawner>().CoinsEarner();
         }
 
-        messangePanel.SetActive(false);
+        uIController.GetComponent<DisplayOnlyUIController>().messangePanel.SetActive(false);
     }
 
     void CoinsEarner(List<GameObject> earnedCoinsList)
@@ -248,14 +179,14 @@ public class EventController : MonoBehaviour
         for (int i = 0; i < earnedCoinsList.Count; i++)
         {
             Destroy(earnedCoinsList[i]);
-            GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinsEarner();
+            GameObject.Find(earnedCoins).GetComponent<Spawner>().CoinsEarner();
         }
         earnedCoinsList.Clear();
     }
 
     IEnumerator EarnedContainerChecker(string moveChoice, int earnedContainerSequence)
     {
-        List<GameObject> earnedCoinsList = GameObject.FindGameObjectWithTag("Container (" + earnedContainerSequence + ")").GetComponent<Counter>().coins;
+        List<GameObject> earnedCoinsList = GameObject.Find("Container (" + earnedContainerSequence + ")").GetComponent<Counter>().coins;
 
         if (earnedCoinsList.Count != 0)
         {
@@ -263,7 +194,7 @@ public class EventController : MonoBehaviour
             {
                 if (isLuckyEnvelope1Hiden == false)
                 {
-                    if (GameObject.FindGameObjectWithTag("Container (6)").GetComponent<Counter>().coins.Count >= 5)
+                    if (GameObject.Find("Container (6)").GetComponent<Counter>().coins.Count >= 5)
                     {
                         StartCoroutine(LuckyEnvelopeEarner("Container (6)"));
                         CoinsEarner(earnedCoinsList);
@@ -281,7 +212,7 @@ public class EventController : MonoBehaviour
                 {
                     if (isLuckyEnvelope2Hiden == false)
                     {
-                        if (GameObject.FindGameObjectWithTag("Container (12)").GetComponent<Counter>().coins.Count >= 5)
+                        if (GameObject.Find("Container (12)").GetComponent<Counter>().coins.Count >= 5)
                         {
                             StartCoroutine(LuckyEnvelopeEarner("Container (12)"));
                             CoinsEarner(earnedCoinsList);
@@ -309,7 +240,7 @@ public class EventController : MonoBehaviour
                     earnedContainerSequence = 0;
                 }
 
-                if (GameObject.FindGameObjectWithTag("Container (" + (earnedContainerSequence + 1) + ")").GetComponent<Counter>().coins.Count == 0)
+                if (GameObject.Find("Container (" + (earnedContainerSequence + 1) + ")").GetComponent<Counter>().coins.Count == 0)
                 {
                     yield return new WaitForSeconds(0.85f);
                     StartCoroutine(NextContainerChecker(earnedContainerSequence + 1, moveChoice));
@@ -326,7 +257,7 @@ public class EventController : MonoBehaviour
                     earnedContainerSequence = 13;
                 }
 
-                if (GameObject.FindGameObjectWithTag("Container (" + (earnedContainerSequence - 1) + ")").GetComponent<Counter>().coins.Count == 0)
+                if (GameObject.Find("Container (" + (earnedContainerSequence - 1) + ")").GetComponent<Counter>().coins.Count == 0)
                 {
                     yield return new WaitForSeconds(0.85f);
                     StartCoroutine(NextContainerChecker(earnedContainerSequence - 1, moveChoice));
@@ -345,7 +276,7 @@ public class EventController : MonoBehaviour
 
     IEnumerator GameOverChecker()
     {
-        if (GameObject.FindGameObjectWithTag("Container (6)").GetComponent<Counter>().coins.Count == 0 && GameObject.FindGameObjectWithTag("Container (12)").GetComponent<Counter>().coins.Count == 0)
+        if (GameObject.Find("Container (6)").GetComponent<Counter>().coins.Count == 0 && GameObject.Find("Container (12)").GetComponent<Counter>().coins.Count == 0)
         {
             isAcceptedToClick = false;
             isGameOver = true;
@@ -353,30 +284,29 @@ public class EventController : MonoBehaviour
             yield return new WaitForSeconds(1.5f);
             for (int i = 1; i <= 5; i++)
             {
-                for (int n = 0; n < GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins.Count; n++)
+                for (int n = 0; n < GameObject.Find("Container (" + i + ")").GetComponent<Counter>().coins.Count; n++)
                 {
-                    Destroy(GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins[n]);
-                    GameObject.FindGameObjectWithTag("Container (c)").GetComponent<Spawner>().CoinsEarner();
+                    Destroy(GameObject.Find("Container (" + i + ")").GetComponent<Counter>().coins[n]);
+                    GameObject.Find("Container (c)").GetComponent<Spawner>().CoinsEarner();
                 }
-                GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins.Clear();
+                GameObject.Find("Container (" + i + ")").GetComponent<Counter>().coins.Clear();
 
             }
             for (int i = 7; i <= 11; i++)
             {
-                for (int n = 0; n < GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins.Count; n++)
+                for (int n = 0; n < GameObject.Find("Container (" + i + ")").GetComponent<Counter>().coins.Count; n++)
                 {
-                    Destroy(GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins[n]);
-                    GameObject.FindGameObjectWithTag("Container (b)").GetComponent<Spawner>().CoinsEarner();
+                    Destroy(GameObject.Find("Container (" + i + ")").GetComponent<Counter>().coins[n]);
+                    GameObject.Find("Container (b)").GetComponent<Spawner>().CoinsEarner();
 
                 }
-                GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins.Clear();
+                GameObject.Find("Container (" + i + ")").GetComponent<Counter>().coins.Clear();
 
             }
 
             yield return new WaitForSeconds(1.5f);
-            gameOverPanel.SetActive(true);
-            player1InfomationText.text = player1Name + "'s" + " Score: " + (GameObject.FindGameObjectWithTag("Container (c)").GetComponent<Counter>().coinsCounter - player1Loan);
-            player2InfomationText.text = player2Name + "'s" + " Score: " + (GameObject.FindGameObjectWithTag("Container (b)").GetComponent<Counter>().coinsCounter - player2Loan);
+
+        uIController.GetComponent<DisplayOnlyUIController>().WhenGameOver(player1Loan, player2Loan);
         }
     }
 
@@ -406,7 +336,7 @@ public class EventController : MonoBehaviour
         int amountOfEmptyContainers = 0;
         for (int i = firstContainerSequence; i <= lastContainerSequence; i++)
         {
-            if (GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Counter>().coins.Count == 0)
+            if (GameObject.Find("Container (" + i + ")").GetComponent<Counter>().coins.Count == 0)
             {
                 amountOfEmptyContainers += 1;
             }
@@ -415,27 +345,27 @@ public class EventController : MonoBehaviour
 
         if (amountOfEmptyContainers == 5)
         {
-            if (GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter < 5)
+            if (GameObject.Find(earnedCoins).GetComponent<Counter>().coinsCounter < 5)
             {
                 if (playerTurn == "player1")
                 {
-                    player1Loan += (5 - GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter);
+                    player1Loan += (5 - GameObject.Find(earnedCoins).GetComponent<Counter>().coinsCounter);
                 }
                 else
                 {
-                    player2Loan += (5 - GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter);
+                    player2Loan += (5 - GameObject.Find(earnedCoins).GetComponent<Counter>().coinsCounter);
                 }
-                int amountOfCoins = GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter;
+                int amountOfCoins = GameObject.Find(earnedCoins).GetComponent<Counter>().coinsCounter;
 
                 for (int i = 0; i < (5 - amountOfCoins); i++)
                 {
-                    GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinsEarner();
+                    GameObject.Find(earnedCoins).GetComponent<Spawner>().CoinsEarner();
                 }
                 yield return new WaitForSeconds(0.85f);
                 
             }
             
-            if (GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Counter>().coinsCounter >= 5)
+            if (GameObject.Find(earnedCoins).GetComponent<Counter>().coinsCounter >= 5)
             {
 
                 int coinSequence = -1;
@@ -443,8 +373,8 @@ public class EventController : MonoBehaviour
                 {
                     yield return new WaitForSeconds(0.25f);
                     coinSequence += 1;
-                    GameObject.FindGameObjectWithTag("Container (" + i + ")").GetComponent<Spawner>().CoinsSpawner();
-                    GameObject.FindGameObjectWithTag(earnedCoins).GetComponent<Spawner>().CoinsDestroyer();
+                    GameObject.Find("Container (" + i + ")").GetComponent<Spawner>().CoinsSpawner();
+                    GameObject.Find(earnedCoins).GetComponent<Spawner>().CoinsDestroyer();
                 }
             }
         }
@@ -478,6 +408,7 @@ public class EventController : MonoBehaviour
             }
         }
 
+        uIController.GetComponent<DisplayOnlyUIController>().PlayerTurnUpdater(this.playerTurn);
         isPlaying = false;
     }
 
@@ -490,7 +421,7 @@ public class EventController : MonoBehaviour
 
     IEnumerator UsingTurn(string moveChoice, int containerSequence, int coinsCounter)
     {
-        selection.SetActive(false);
+        uIController.GetComponent<DisplayOnlyUIController>().selection.SetActive(false);
 
         if (moveChoice == "go up")
         {
@@ -523,7 +454,7 @@ public class EventController : MonoBehaviour
                             }
                             else
                             {
-                                GameObject.FindGameObjectWithTag("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
+                                GameObject.Find("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
                                 yield return new WaitForSeconds(delayTime);
 
                             }
@@ -544,7 +475,7 @@ public class EventController : MonoBehaviour
                             player2CoinsInHandCounter -= 1;
                         }
 
-                        GameObject.FindGameObjectWithTag("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
+                        GameObject.Find("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
                         yield return new WaitForSeconds(delayTime);
 
                     }
@@ -593,7 +524,7 @@ public class EventController : MonoBehaviour
                             }
                             else
                             {
-                                GameObject.FindGameObjectWithTag("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
+                                GameObject.Find("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
                                 yield return new WaitForSeconds(delayTime);
 
                             }
@@ -612,7 +543,7 @@ public class EventController : MonoBehaviour
                             player2CoinsInHandCounter -= 1;
                         }
 
-                        GameObject.FindGameObjectWithTag("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
+                        GameObject.Find("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
                         yield return new WaitForSeconds(delayTime);
 
                     }
@@ -631,7 +562,7 @@ public class EventController : MonoBehaviour
 
     IEnumerator NextContainerChecker(int nextContainerSequence, string moveChoice)
     {
-        List<GameObject> coins = GameObject.FindGameObjectWithTag("Container (" + nextContainerSequence + ")").GetComponent<Counter>().coins;
+        List<GameObject> coins = GameObject.Find("Container (" + nextContainerSequence + ")").GetComponent<Counter>().coins;
         if (moveChoice == "go up")
         {
             if (coins.Count == 0)
@@ -655,7 +586,7 @@ public class EventController : MonoBehaviour
                 {
                     for (int i = 0; i < coins.Count; i++)
                     {
-                        Destroy(GameObject.FindGameObjectWithTag("Container (" + nextContainerSequence + ")").GetComponent<Counter>().coins[i]);
+                        Destroy(GameObject.Find("Container (" + nextContainerSequence + ")").GetComponent<Counter>().coins[i]);
                     }
                     int n = coins.Count;
                     if (playerTurn == "player 1")
@@ -695,7 +626,7 @@ public class EventController : MonoBehaviour
                 {
                     for (int i = 0; i < coins.Count; i++)
                     {
-                        Destroy(GameObject.FindGameObjectWithTag("Container (" + nextContainerSequence + ")").GetComponent<Counter>().coins[i]);
+                        Destroy(GameObject.Find("Container (" + nextContainerSequence + ")").GetComponent<Counter>().coins[i]);
                     }
                     int n = coins.Count;
                     if (playerTurn == "player 1")

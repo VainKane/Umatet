@@ -23,16 +23,13 @@ public class CollisionDetector : MonoBehaviour
 
     }
 
-
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.name != "Coin(Clone)" && isCounted == false)
         {
-            GameObject.FindGameObjectWithTag(collision.name).GetComponent<Counter>().coins.Add(obj); 
+            GameObject.Find(collision.name).GetComponent<Counter>().coins.Add(obj); 
             isCounted = true;
 
         }
-
     }
-
 }
