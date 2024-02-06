@@ -82,6 +82,7 @@ public class EventController : MonoBehaviour
 
         player1Loan = 0;
         player2Loan = 0;
+
     }
 
     // Update is called once per frame
