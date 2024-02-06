@@ -21,7 +21,6 @@ public class ButtonController : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log("clicked");
         if (gameController.GetComponent<EventController>().isPlaying == false)
         {
             if (gameController.GetComponent<EventController>().isAcceptedToClick == true)

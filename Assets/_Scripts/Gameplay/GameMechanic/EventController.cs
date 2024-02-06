@@ -7,45 +7,30 @@ using System;
 
 public class EventController : MonoBehaviour
 {
-    private List<GameObject> coins;
-
-    private GameObject container;
-    private string earnedCoins;
-    private float delayTime;
-
-    private KeyCode keyIncreasingContainerSequence;
-    private KeyCode keyDecreasingContainerSequence;
-
-
-    [Header("Playground")]
-    
+    [SerializeField] private GameObject uIController;
     [SerializeField] private GameObject luckyEnvelope1;
     [SerializeField] private GameObject luckyEnvelope2;
 
 
-    [SerializeField] private GameObject uIController;
+    [HideInInspector] public KeyCode keyIncreasingContainerSequence;
+    [HideInInspector] public KeyCode keyDecreasingContainerSequence;
+    [HideInInspector] public int player1CoinsInHandCounter;
+    [HideInInspector] public int player2CoinsInHandCounter;
+    [HideInInspector] public int coinsCounter;
+    [HideInInspector] public int player1Loan;
+    [HideInInspector] public int player2Loan;
+    [HideInInspector] public bool isAcceptedToPlay;
+    [HideInInspector] public GameObject container;
+    [HideInInspector] public bool isPlaying;
+    [HideInInspector] public string playerTurn;
+    [HideInInspector] public bool isAcceptedToClick;
 
-    [Header("Attributes")]
-    [SerializeField] public bool isPlaying;
-    public string playerTurn;
-    public bool isAcceptedToClick;
-    
-
+    private List<GameObject> coins;
     private bool isLuckyEnvelope1Hiden;
     private bool isLuckyEnvelope2Hiden;
-
-    
-    public int player1CoinsInHandCounter;
-    public int player2CoinsInHandCounter;
-
-    private int coinsCounter;
-
-    private bool isAcceptedToPlay;
     private bool isGameOver;
-
-
-    public int player1Loan;
-    public int player2Loan;
+    private string earnedCoins;
+    private float delayTime;
 
     // Start is called before the first frame update
     void Start()
@@ -74,24 +59,6 @@ public class EventController : MonoBehaviour
     void Update()
     {
         AttributesUpdater();
-        playerInteractionDetector();
-    }
-
-    void playerInteractionDetector()
-    {
-        if (isAcceptedToPlay == true)
-        {
-            if (Input.GetKeyDown(keyIncreasingContainerSequence))
-            {
-                isAcceptedToPlay = false;
-                StartCoroutine(UsingTurn("go up", ContainerSequenceCalculator(container.name), coinsCounter));
-            }
-            if (Input.GetKey(keyDecreasingContainerSequence))
-            {
-                isAcceptedToPlay = false;
-                StartCoroutine(UsingTurn("go down", ContainerSequenceCalculator(container.name), coinsCounter));
-            }
-        }
     }
 
     public void PlayerClickReceiver(GameObject container)
@@ -412,14 +379,14 @@ public class EventController : MonoBehaviour
         isPlaying = false;
     }
 
-    int ContainerSequenceCalculator(string containerName)
+    public int ContainerSequenceCalculator(string containerName)
     {
         containerName = containerName.Substring(11);
         int containerSequence = Convert.ToInt16(containerName.Remove(containerName.LastIndexOf(")")));
         return containerSequence;
     }
 
-    IEnumerator UsingTurn(string moveChoice, int containerSequence, int coinsCounter)
+    public IEnumerator UsingTurn(string moveChoice, int containerSequence, int coinsCounter)
     {
         uIController.GetComponent<DisplayOnlyUIController>().selection.SetActive(false);
 

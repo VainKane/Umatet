@@ -6,23 +6,20 @@ using UnityEngine.UI;
 public class DisplayOnlyUIController : MonoBehaviour
 {
     public GameObject settingPanel;
-
     public GameObject gameOverPanel;
-    public Text player1Score;
-    public Text player2Score;
 
-    [SerializeField] GameObject redFlag;
-    [SerializeField] private GameObject blueFlag;
-
-    [SerializeField] private Text player1Infomation;
-    [SerializeField] private Text player2Infomation;
+    [HideInInspector] public Text player1Score;
+    [HideInInspector] public Text player2Score;
 
     [SerializeField] private GameObject gameController;
+    [SerializeField] GameObject redFlag;
+    [SerializeField] private GameObject blueFlag;
+    [SerializeField] private Text player1Infomation;
+    [SerializeField] private Text player2Infomation;
 
     public GameObject selection;
 
     [Header("Envelope Earn Messange")]
-
     public GameObject messangePanel;
     public Text textReward;
 
@@ -48,7 +45,7 @@ public class DisplayOnlyUIController : MonoBehaviour
         PlayerInfomationUpdater();
     }
 
-    void OnClickSettingButton()
+    void UsingSettingMenu()
     {
         settingPanel.SetActive(true);
     }
