@@ -12,24 +12,26 @@ public class AudioController : MonoBehaviour
     [SerializeField] private AudioClip cook;
     [SerializeField] private AudioClip hotMilk;
     [SerializeField] private AudioClip simpleLove;
+    [SerializeField] private AudioClip summertime;
+    [SerializeField] private AudioClip bubbleTea;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(PlayingRandomInGameMusic(new List<AudioClip> { cook, hotMilk, simpleLove }));
-        
+        StartCoroutine(PlayingRandomInGameMusic(new List<AudioClip> { cook, hotMilk, simpleLove, summertime, bubbleTea }));
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     IEnumerator PlayingRandomInGameMusic(List<AudioClip> musicList)
     {
-        play:
+    play:
         int ingameMusicSequence = Random.Range(0, musicList.Count);
         musicSource.clip = musicList[ingameMusicSequence];
         musicSource.Play();
