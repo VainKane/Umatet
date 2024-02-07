@@ -73,8 +73,8 @@ public class DisplayOnlyUIController : MonoBehaviour
 
     public void PlayerInfomationUpdater()
     {
-        player1Infomation.text = "asdf" + "\nHanding " + gameController.GetComponent<EventController>().player1CoinsInHandCounter + "\nLoan: " + gameController.GetComponent<EventController>().player1Loan;
-        player2Infomation.text = "asfa" + "\nHanding " + gameController.GetComponent<EventController>().player2CoinsInHandCounter + "\nLoan: " + gameController.GetComponent<EventController>().player2Loan;
+        player1Infomation.text = "asdf" + "\nHanding " + gameController.GetComponent<GameMechanic>().player1CoinsInHandCounter + "\nLoan: " + gameController.GetComponent<GameMechanic>().player1Loan;
+        player2Infomation.text = "asfa" + "\nHanding " + gameController.GetComponent<GameMechanic>().player2CoinsInHandCounter + "\nLoan: " + gameController.GetComponent<GameMechanic>().player2Loan;
     }
 
     public void SelectingContainer(GameObject container)

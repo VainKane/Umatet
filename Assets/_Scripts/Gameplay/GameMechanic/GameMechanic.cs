@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System;
 
 
-public class EventController : MonoBehaviour
+public class GameMechanic : MonoBehaviour
 {
     [SerializeField] private GameObject uIController;
     [SerializeField] private GameObject luckyEnvelope1;
