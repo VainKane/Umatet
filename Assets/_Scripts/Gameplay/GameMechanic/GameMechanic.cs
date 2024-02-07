@@ -389,6 +389,7 @@ public class GameMechanic : MonoBehaviour
     public IEnumerator UsingTurn(string moveChoice, int containerSequence, int coinsCounter)
     {
         uIController.GetComponent<DisplayOnlyUIController>().selection.SetActive(false);
+        isAcceptedToPlay = false;
 
         if (moveChoice == "go up")
         {

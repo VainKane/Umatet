@@ -7,6 +7,9 @@ public class DisplayOnlyUIController : MonoBehaviour
 {
     public GameObject settingPanel;
     public GameObject gameOverPanel;
+    public GameObject selection;
+    public GameObject messangePanel;
+    public Text textReward;
 
     [HideInInspector] public Text player1Score;
     [HideInInspector] public Text player2Score;
@@ -17,11 +20,7 @@ public class DisplayOnlyUIController : MonoBehaviour
     [SerializeField] private Text player1Infomation;
     [SerializeField] private Text player2Infomation;
 
-    public GameObject selection;
 
-    [Header("Envelope Earn Messange")]
-    public GameObject messangePanel;
-    public Text textReward;
 
     // Start is called before the first frame update
     void Start()
@@ -73,8 +72,8 @@ public class DisplayOnlyUIController : MonoBehaviour
 
     public void PlayerInfomationUpdater()
     {
-        player1Infomation.text = "asdf" + "\nHanding " + gameController.GetComponent<GameMechanic>().player1CoinsInHandCounter + "\nLoan: " + gameController.GetComponent<GameMechanic>().player1Loan;
-        player2Infomation.text = "asfa" + "\nHanding " + gameController.GetComponent<GameMechanic>().player2CoinsInHandCounter + "\nLoan: " + gameController.GetComponent<GameMechanic>().player2Loan;
+        player1Infomation.text = "asdf" + "\nHand: " + gameController.GetComponent<GameMechanic>().player1CoinsInHandCounter + "\nLoan: " + gameController.GetComponent<GameMechanic>().player1Loan;
+        player2Infomation.text = "asfa" + "\nHand: " + gameController.GetComponent<GameMechanic>().player2CoinsInHandCounter + "\nLoan: " + gameController.GetComponent<GameMechanic>().player2Loan;
     }
 
     public void SelectingContainer(GameObject container)

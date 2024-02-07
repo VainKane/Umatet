@@ -15,17 +15,18 @@ public class UserInteractionDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameController.GetComponent<GameMechanic>().isAcceptedToPlay == true)
+        if (gameController.GetComponent<GameMechanic>().isPlaying == false)
         {
-            if (Input.GetKeyDown(gameController.GetComponent<GameMechanic>().keyIncreasingContainerSequence))
+            if (gameController.GetComponent<GameMechanic>().isAcceptedToPlay == true)
             {
-                gameController.GetComponent<GameMechanic>().isAcceptedToPlay = false;
-                StartCoroutine(gameController.GetComponent<GameMechanic>().UsingTurn("go up", gameController.GetComponent<GameMechanic>().ContainerSequenceCalculator(gameController.GetComponent<GameMechanic>().container.name), gameController.GetComponent<GameMechanic>().coinsCounter));
-            }
-            if (Input.GetKey(gameController.GetComponent<GameMechanic>().keyDecreasingContainerSequence))
-            {
-                gameController.GetComponent<GameMechanic>().isAcceptedToPlay = false;
-                StartCoroutine(gameController.GetComponent<GameMechanic>().UsingTurn("go down", gameController.GetComponent<GameMechanic>().ContainerSequenceCalculator(gameController.GetComponent<GameMechanic>().container.name), gameController.GetComponent<GameMechanic>().coinsCounter));
+                if (Input.GetKeyDown(gameController.GetComponent<GameMechanic>().keyIncreasingContainerSequence))
+                {
+                    StartCoroutine(gameController.GetComponent<GameMechanic>().UsingTurn("go up", gameController.GetComponent<GameMechanic>().ContainerSequenceCalculator(gameController.GetComponent<GameMechanic>().container.name), gameController.GetComponent<GameMechanic>().coinsCounter));
+                }
+                if (Input.GetKey(gameController.GetComponent<GameMechanic>().keyDecreasingContainerSequence))
+                {
+                    StartCoroutine(gameController.GetComponent<GameMechanic>().UsingTurn("go down", gameController.GetComponent<GameMechanic>().ContainerSequenceCalculator(gameController.GetComponent<GameMechanic>().container.name), gameController.GetComponent<GameMechanic>().coinsCounter));
+                }
             }
         }
     }
