@@ -59,6 +59,11 @@ public class GameMechanic : MonoBehaviour
     void Update()
     {
         AttributesUpdater();
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            GameObject.Find(earnedCoins).GetComponent<Spawner>().CoinsDestroyer();
+        }
     }
 
     public void PlayerClickReceiver(GameObject container)
