@@ -11,7 +11,6 @@ public class GameMechanic : MonoBehaviour
     [SerializeField] private GameObject redEnvelope1;
     [SerializeField] private GameObject redEnvelope2;
 
-
     [HideInInspector] public KeyCode keyIncreasingContainerSequence;
     [HideInInspector] public KeyCode keyDecreasingContainerSequence;
     [HideInInspector] public int player1CoinsInHandCounter;
@@ -31,6 +30,8 @@ public class GameMechanic : MonoBehaviour
     private bool isGameOver;
     private string earnedCoins;
     private float delayTime;
+    private AudioController audioController;
+
 
     // Start is called before the first frame update
     void Start()
@@ -53,22 +54,19 @@ public class GameMechanic : MonoBehaviour
         player2Loan = 0;
 
         uIController = GameObject.Find("UIController");
-    }
+        audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
+     }
 
     // Update is called once per frame
     void Update()
     {
         AttributesUpdater();
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            GameObject.Find(earnedCoins).GetComponent<Spawner>().CoinsDestroyer();
-        }
     }
 
     public void PlayerClickReceiver(GameObject container)
     {
         StartCoroutine(ChosingContainer(container));
+        isAcceptedToPlay = true;
     }
 
     IEnumerator ChosingContainer(GameObject container)
@@ -90,14 +88,13 @@ public class GameMechanic : MonoBehaviour
         else
         {
             player2CoinsInHandCounter = coins.Count;
-
         }
 
         coins.Clear();
         uIController.GetComponent<DisplayOnlyUIController>().SelectingContainer(container);
+        audioController.PlayingSFX(audioController.pickingCoin);
 
         yield return new WaitForSeconds(0.1f);
-        isAcceptedToPlay = true;
     }
 
     public void AttributesUpdater()
@@ -117,7 +114,7 @@ public class GameMechanic : MonoBehaviour
         }
     }
 
-    IEnumerator redEnvelopeEarner(string containerName)
+    IEnumerator RedEnvelopeEarner(string containerName)
     {
         if (containerName == "Container (6)")
         {
@@ -140,18 +137,21 @@ public class GameMechanic : MonoBehaviour
         {
             value = UnityEngine.Random.Range(5, 12);
             uIController.GetComponent<DisplayOnlyUIController>().textReward.text = "= " + value;
+            audioController.PlayingSFX(audioController.ping);
             yield return new WaitForSeconds(0.1f);
 
         }
 
         value = UnityEngine.Random.Range(5, 12);
         uIController.GetComponent<DisplayOnlyUIController>().textReward.text = "= " + value;
+        audioController.PlayingSFX(audioController.ping);
         yield return new WaitForSeconds(1.5f);
 
         for (int i = 0; i < value; i++)
         {
             GameObject.Find(earnedCoins).GetComponent<Spawner>().CoinsEarner();
         }
+        audioController.PlayingSFX(audioController.earningCoin);
 
         uIController.GetComponent<DisplayOnlyUIController>().messangePanel.SetActive(false);
     }
@@ -159,6 +159,7 @@ public class GameMechanic : MonoBehaviour
     IEnumerator CoinsEarner(List<GameObject> earnedCoinsList)
     {
         yield return new WaitForSeconds(0.37f);
+        audioController.PlayingSFX(audioController.earningCoin);
         for (int i = 0; i < earnedCoinsList.Count; i++)
         {
             Destroy(earnedCoinsList[i]);
@@ -179,7 +180,7 @@ public class GameMechanic : MonoBehaviour
                 {
                     if (GameObject.Find("Container (6)").GetComponent<Counter>().coins.Count >= 5)
                     {
-                        StartCoroutine(redEnvelopeEarner("Container (6)"));
+                        StartCoroutine(RedEnvelopeEarner("Container (6)"));
                         StartCoroutine(CoinsEarner(earnedCoinsList));
                         yield return new WaitForSeconds(9.3f);
                     }
@@ -197,7 +198,7 @@ public class GameMechanic : MonoBehaviour
                     {
                         if (GameObject.Find("Container (12)").GetComponent<Counter>().coins.Count >= 5)
                         {
-                            StartCoroutine(redEnvelopeEarner("Container (12)"));
+                            StartCoroutine(RedEnvelopeEarner("Container (12)"));
                             StartCoroutine(CoinsEarner(earnedCoinsList));
                             yield return new WaitForSeconds(9.3f);
 
@@ -407,7 +408,8 @@ public class GameMechanic : MonoBehaviour
 
         if (areYouNextContainerChecker == true)
         {
-            yield return new WaitForSeconds(0.85f);
+            audioController.PlayingSFX(audioController.pickingCoin);
+            yield return new WaitForSeconds(0.5f);
         }
 
         if (moveChoice == "go up")
@@ -583,6 +585,7 @@ public class GameMechanic : MonoBehaviour
                     isPlaying = false;
 
                     StartCoroutine(UsingTurn(true, moveChoice, nextContainerSequence, n));
+
                 }
             }
         }

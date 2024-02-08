@@ -13,17 +13,19 @@ public class Spawner : MonoBehaviour
     private float maxX;
     private float maxY;
 
-    public float radius;
+    private float radius;
 
-    public GameObject coinPrefab;
+    [SerializeField] private GameObject coinPrefab;
+    private AudioController audioController;
 
     Vector2 coinPosition;
     GameObject obj;
 
-
     // Start is called before the first frame update
     void Start()
     {
+        audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
+
         obj = gameObject;
 
         buttonPosX = obj.transform.position.x;
@@ -79,6 +81,11 @@ public class Spawner : MonoBehaviour
 
             GameObject uiInstance = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
             uiInstance.transform.SetParent(transform);
+
+            audioController.PlayingSFX(audioController.coinDrop);
+            
+
+
         }
     }
 

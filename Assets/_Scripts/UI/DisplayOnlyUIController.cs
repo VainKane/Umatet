@@ -21,10 +21,13 @@ public class DisplayOnlyUIController : MonoBehaviour
     [SerializeField] private Text player1Infomation;
     [SerializeField] private Text player2Infomation;
     [SerializeField] private Text result;
+    [SerializeField] private GameObject winner;
     public GameObject selection;
 
     [HideInInspector] public string player1Name;
     [HideInInspector] public string player2Name;
+
+    private Animator winnerAnimation;
 
 
     // Start is called before the first frame update
@@ -42,6 +45,8 @@ public class DisplayOnlyUIController : MonoBehaviour
 
         player1Name = "Vain_Kane";
         player2Name = "Vain_Kaya";
+
+        winnerAnimation = winner.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -67,10 +72,13 @@ public class DisplayOnlyUIController : MonoBehaviour
         else if (player1Score > player2Score)
         {
             result.text = String.Concat(result.text, player1Name, "!");
+            winnerAnimation.SetFloat("PlayerHeadSequence", 1);
         }
         else
         {
             result.text = String.Concat(result.text, player2Name, "!");
+            winnerAnimation.SetFloat("PlayerHeadSequence", 2);
+
         }
     }
 

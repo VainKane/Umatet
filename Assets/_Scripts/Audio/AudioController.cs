@@ -9,11 +9,17 @@ public class AudioController : MonoBehaviour
     [SerializeField] private AudioSource sFXSource;
 
     [Header("Ingame Music")]
-    [SerializeField] private AudioClip cook;
-    [SerializeField] private AudioClip hotMilk;
-    [SerializeField] private AudioClip simpleLove;
-    [SerializeField] private AudioClip summertime;
-    [SerializeField] private AudioClip bubbleTea;
+    public AudioClip cook;
+    public AudioClip hotMilk;
+    public AudioClip simpleLove;
+    public AudioClip summertime;
+    public AudioClip bubbleTea;
+
+    [Header("SFX")]
+    public AudioClip coinDrop;
+    public AudioClip pickingCoin;
+    public AudioClip earningCoin;
+    public AudioClip ping;
 
 
     // Start is called before the first frame update
@@ -37,5 +43,10 @@ public class AudioController : MonoBehaviour
         musicSource.Play();
         yield return new WaitForSeconds(musicSource.clip.length);
         goto play;
+    }
+
+    public void PlayingSFX(AudioClip sfx)
+    {
+        sFXSource.PlayOneShot(sfx);
     }
 }
