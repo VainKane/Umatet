@@ -55,7 +55,7 @@ public class GameMechanic : MonoBehaviour
 
         uIController = GameObject.Find("UIController");
         audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
-     }
+    }
 
     // Update is called once per frame
     void Update()
@@ -82,8 +82,8 @@ public class GameMechanic : MonoBehaviour
         coinsCounter = coins.Count;
 
         if (playerTurn == "player 1")
-        { 
-        player1CoinsInHandCounter = coins.Count;
+        {
+            player1CoinsInHandCounter = coins.Count;
         }
         else
         {
@@ -171,7 +171,6 @@ public class GameMechanic : MonoBehaviour
     IEnumerator EarnedContainerChecker(string moveChoice, int earnedContainerSequence)
     {
         List<GameObject> earnedCoinsList = GameObject.Find("Container (" + earnedContainerSequence + ")").GetComponent<Counter>().coins;
-
         if (earnedCoinsList.Count != 0)
         {
             if (earnedContainerSequence == 6)
@@ -287,7 +286,7 @@ public class GameMechanic : MonoBehaviour
 
             yield return new WaitForSeconds(1.5f);
 
-        uIController.GetComponent<DisplayOnlyUIController>().WhenGameOver(player1Loan, player2Loan);
+            uIController.GetComponent<DisplayOnlyUIController>().WhenGameOver(player1Loan, player2Loan);
         }
     }
 
@@ -343,9 +342,9 @@ public class GameMechanic : MonoBehaviour
                     GameObject.Find(earnedCoins).GetComponent<Spawner>().CoinsEarner();
                 }
                 yield return new WaitForSeconds(0.85f);
-                
+
             }
-            
+
             if (GameObject.Find(earnedCoins).GetComponent<Counter>().coinsCounter >= 5)
             {
 
