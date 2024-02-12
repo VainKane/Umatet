@@ -127,9 +127,6 @@ public class GameMechanic : MonoBehaviour
             redEnvelope2.SetActive(false);
         }
 
-
-        yield return new WaitForSeconds(0.85f);
-
         uIController.GetComponent<DisplayOnlyUIController>().messangePanel.SetActive(true);
         int value;
 
@@ -139,13 +136,13 @@ public class GameMechanic : MonoBehaviour
             uIController.GetComponent<DisplayOnlyUIController>().textReward.text = "= " + value;
             audioController.PlayingSFX(audioController.ping);
             yield return new WaitForSeconds(0.1f);
-
         }
 
         value = UnityEngine.Random.Range(5, 12);
         uIController.GetComponent<DisplayOnlyUIController>().textReward.text = "= " + value;
         audioController.PlayingSFX(audioController.ping);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.2f);
+
 
         for (int i = 0; i < value; i++)
         {
@@ -156,9 +153,8 @@ public class GameMechanic : MonoBehaviour
         uIController.GetComponent<DisplayOnlyUIController>().messangePanel.SetActive(false);
     }
 
-    IEnumerator CoinsEarner(List<GameObject> earnedCoinsList)
+    void CoinsEarner(List<GameObject> earnedCoinsList)
     {
-        yield return new WaitForSeconds(0.37f);
         audioController.PlayingSFX(audioController.earningCoin);
         for (int i = 0; i < earnedCoinsList.Count; i++)
         {
@@ -179,14 +175,15 @@ public class GameMechanic : MonoBehaviour
                 {
                     if (GameObject.Find("Container (6)").GetComponent<Counter>().coins.Count >= 5)
                     {
+                        yield return new WaitForSeconds(0.37f);
                         StartCoroutine(RedEnvelopeEarner("Container (6)"));
-                        StartCoroutine(CoinsEarner(earnedCoinsList));
-                        yield return new WaitForSeconds(9.3f);
+                        CoinsEarner(earnedCoinsList);
+                        yield return new WaitForSeconds(7.1f);
                     }
                 }
                 else
                 {
-                    StartCoroutine(CoinsEarner(earnedCoinsList));
+                    CoinsEarner(earnedCoinsList);
                 }
             }
             else if (earnedContainerSequence == 12)
@@ -197,22 +194,23 @@ public class GameMechanic : MonoBehaviour
                     {
                         if (GameObject.Find("Container (12)").GetComponent<Counter>().coins.Count >= 5)
                         {
+                            yield return new WaitForSeconds(0.37f);
                             StartCoroutine(RedEnvelopeEarner("Container (12)"));
-                            StartCoroutine(CoinsEarner(earnedCoinsList));
-                            yield return new WaitForSeconds(9.3f);
+                            CoinsEarner(earnedCoinsList);
+                            yield return new WaitForSeconds(7.1f);
 
                         }
                     }
                 }
                 else
                 {
-                    StartCoroutine(CoinsEarner(earnedCoinsList));
+                    CoinsEarner(earnedCoinsList);
 
                 }
             }
             else
             {
-                StartCoroutine(CoinsEarner(earnedCoinsList));
+                CoinsEarner(earnedCoinsList);
             }
 
             if (moveChoice == "go up")
@@ -224,6 +222,7 @@ public class GameMechanic : MonoBehaviour
 
                 if (GameObject.Find("Container (" + (earnedContainerSequence + 1) + ")").GetComponent<Counter>().coins.Count == 0)
                 {
+                    yield return new WaitForSeconds(0.37f);
                     NextContainerChecker(earnedContainerSequence + 1, moveChoice);
                 }
                 else
@@ -240,6 +239,7 @@ public class GameMechanic : MonoBehaviour
 
                 if (GameObject.Find("Container (" + (earnedContainerSequence - 1) + ")").GetComponent<Counter>().coins.Count == 0)
                 {
+                    yield return new WaitForSeconds(0.37f);
                     NextContainerChecker(earnedContainerSequence - 1, moveChoice);
                 }
                 else
