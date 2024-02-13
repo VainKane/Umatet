@@ -67,6 +67,7 @@ public class GameMechanic : MonoBehaviour
     {
         StartCoroutine(ChosingContainer(container));
         isAcceptedToPlay = true;
+        isAcceptedToClick = false;
     }
 
     IEnumerator ChosingContainer(GameObject container)
@@ -327,7 +328,7 @@ public class GameMechanic : MonoBehaviour
         {
             if (GameObject.Find(earnedCoins).GetComponent<Counter>().coinsCounter < 5)
             {
-                if (playerTurn == "player1")
+                if (playerTurn == "player 1")
                 {
                     player1Loan += (5 - GameObject.Find(earnedCoins).GetComponent<Counter>().coinsCounter);
                 }
@@ -335,6 +336,7 @@ public class GameMechanic : MonoBehaviour
                 {
                     player2Loan += (5 - GameObject.Find(earnedCoins).GetComponent<Counter>().coinsCounter);
                 }
+
                 int amountOfCoins = GameObject.Find(earnedCoins).GetComponent<Counter>().coinsCounter;
 
                 for (int i = 0; i < (5 - amountOfCoins); i++)
@@ -391,6 +393,7 @@ public class GameMechanic : MonoBehaviour
 
         uIController.GetComponent<DisplayOnlyUIController>().PlayerTurnUpdater(this.playerTurn);
         isPlaying = false;
+        isAcceptedToClick = true;
     }
 
     public int ContainerSequenceCalculator(string containerName)
@@ -404,6 +407,7 @@ public class GameMechanic : MonoBehaviour
     {
         uIController.GetComponent<DisplayOnlyUIController>().selection.SetActive(false);
         isAcceptedToPlay = false;
+        isAcceptedToClick = false;
 
         if (areYouNextContainerChecker == true)
         {
@@ -547,50 +551,17 @@ public class GameMechanic : MonoBehaviour
     void NextContainerChecker(int nextContainerSequence, string moveChoice)
     {
         List<GameObject> coins = GameObject.Find("Container (" + nextContainerSequence + ")").GetComponent<Counter>().coins;
-        if (moveChoice == "go up")
+        if (coins.Count == 0)
         {
-            if (coins.Count == 0)
+            if (moveChoice == "go up")
             {
                 if (nextContainerSequence == 12)
                 {
                     nextContainerSequence = 0;
                 }
-
                 StartCoroutine(EarnedContainerChecker("go up", nextContainerSequence + 1));
-
             }
-            else
-            {
-                if (nextContainerSequence == 6 || nextContainerSequence == 12)
-                {
-                    StartCoroutine(PlayerTurnChanger(playerTurn));
-                }
-                else
-                {
-                    for (int i = 0; i < coins.Count; i++)
-                    {
-                        Destroy(GameObject.Find("Container (" + nextContainerSequence + ")").GetComponent<Counter>().coins[i]);
-                    }
-                    int n = coins.Count;
-                    if (playerTurn == "player 1")
-                    {
-                        player1CoinsInHandCounter = n;
-                    }
-                    else
-                    {
-                        player2CoinsInHandCounter = n;
-                    }
-                    coins.Clear();
-                    isPlaying = false;
-
-                    StartCoroutine(UsingTurn(true, moveChoice, nextContainerSequence, n));
-
-                }
-            }
-        }
-        if (moveChoice == "go down")
-        {
-            if (coins.Count == 0)
+            if (moveChoice == "go down")
             {
                 if (nextContainerSequence == 1)
                 {
@@ -598,33 +569,31 @@ public class GameMechanic : MonoBehaviour
                 }
                 StartCoroutine(EarnedContainerChecker("go down", nextContainerSequence - 1));
             }
+        }
+        else if (nextContainerSequence == 6 || nextContainerSequence == 12)
+        {
+            StartCoroutine(PlayerTurnChanger(playerTurn));
+        }
+        else
+        {
+            for (int i = 0; i < coins.Count; i++)
+            {
+                Destroy(GameObject.Find("Container (" + nextContainerSequence + ")").GetComponent<Counter>().coins[i]);
+            }
+            int n = coins.Count;
+            if (playerTurn == "player 1")
+            {
+                player1CoinsInHandCounter = n;
+            }
             else
             {
-                if (nextContainerSequence == 6 || nextContainerSequence == 12)
-                {
-                    StartCoroutine(PlayerTurnChanger(playerTurn));
-                }
-                else
-                {
-                    for (int i = 0; i < coins.Count; i++)
-                    {
-                        Destroy(GameObject.Find("Container (" + nextContainerSequence + ")").GetComponent<Counter>().coins[i]);
-                    }
-                    int n = coins.Count;
-                    if (playerTurn == "player 1")
-                    {
-                        player1CoinsInHandCounter = n;
-                    }
-                    else
-                    {
-                        player2CoinsInHandCounter = n;
-                    }
-
-                    coins.Clear();
-                    isPlaying = false;
-                    StartCoroutine(UsingTurn(true, moveChoice, nextContainerSequence, n));
-                }
+                player2CoinsInHandCounter = n;
             }
+            coins.Clear();
+            isPlaying = false;
+
+            StartCoroutine(UsingTurn(true, moveChoice, nextContainerSequence, n));
+
         }
     }
 }

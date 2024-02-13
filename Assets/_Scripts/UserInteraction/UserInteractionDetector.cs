@@ -15,18 +15,15 @@ public class UserInteractionDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameController.GetComponent<GameMechanic>().isPlaying == false)
+        if (gameController.GetComponent<GameMechanic>().isAcceptedToPlay == true)
         {
-            if (gameController.GetComponent<GameMechanic>().isAcceptedToPlay == true)
+            if (Input.GetKeyDown(gameController.GetComponent<GameMechanic>().keyIncreasingContainerSequence))
             {
-                if (Input.GetKeyDown(gameController.GetComponent<GameMechanic>().keyIncreasingContainerSequence))
-                {
-                    StartCoroutine(gameController.GetComponent<GameMechanic>().UsingTurn(false, "go up", gameController.GetComponent<GameMechanic>().ContainerSequenceCalculator(gameController.GetComponent<GameMechanic>().container.name), gameController.GetComponent<GameMechanic>().coinsCounter));
-                }
-                if (Input.GetKey(gameController.GetComponent<GameMechanic>().keyDecreasingContainerSequence))
-                {
-                    StartCoroutine(gameController.GetComponent<GameMechanic>().UsingTurn(false, "go down", gameController.GetComponent<GameMechanic>().ContainerSequenceCalculator(gameController.GetComponent<GameMechanic>().container.name), gameController.GetComponent<GameMechanic>().coinsCounter));
-                }
+                StartCoroutine(gameController.GetComponent<GameMechanic>().UsingTurn(false, "go up", gameController.GetComponent<GameMechanic>().ContainerSequenceCalculator(gameController.GetComponent<GameMechanic>().container.name), gameController.GetComponent<GameMechanic>().coinsCounter));
+            }
+            if (Input.GetKey(gameController.GetComponent<GameMechanic>().keyDecreasingContainerSequence))
+            {
+                StartCoroutine(gameController.GetComponent<GameMechanic>().UsingTurn(false, "go down", gameController.GetComponent<GameMechanic>().ContainerSequenceCalculator(gameController.GetComponent<GameMechanic>().container.name), gameController.GetComponent<GameMechanic>().coinsCounter));
             }
         }
     }
