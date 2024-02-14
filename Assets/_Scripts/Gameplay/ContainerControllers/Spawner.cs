@@ -15,6 +15,8 @@ public class Spawner : MonoBehaviour
 
     private float radius;
 
+    [HideInInspector] public bool isTheFirstTimePlaying;
+
     [SerializeField] private GameObject coinPrefab;
     private AudioController audioController;
 
@@ -24,6 +26,8 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isTheFirstTimePlaying = true;
+
         audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
 
         obj = gameObject;
@@ -82,10 +86,10 @@ public class Spawner : MonoBehaviour
             GameObject uiInstance = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
             uiInstance.transform.SetParent(transform);
 
-            audioController.PlayingSFX(audioController.coinDrop);
-            
-
-
+            if (isTheFirstTimePlaying == false)
+            {
+                audioController.PlayingSFX(audioController.coinDrop);
+            }
         }
     }
 

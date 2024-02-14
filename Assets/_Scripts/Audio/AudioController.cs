@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class AudioController : MonoBehaviour
 {
 
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource sFXSource;
+    [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sFXSlider;
 
     [Header("Ingame Music")]
     public AudioClip cook;
@@ -26,7 +31,17 @@ public class AudioController : MonoBehaviour
     void Start()
     {
         StartCoroutine(PlayingRandomInGameMusic(new List<AudioClip> { cook, hotMilk, simpleLove, summertime, bubbleTea }));
-
+        
+        if (PlayerPrefs.HasKey("musicVolume") == true)
+        {
+            VolumeLoader();
+            SFXVolumeLoader();
+        }
+        else
+        {
+            SettingMusicVolume();
+            SettingSFXVolume();
+        }
     }
 
     // Update is called once per frame
@@ -48,5 +63,32 @@ public class AudioController : MonoBehaviour
     public void PlayingSFX(AudioClip sfx)
     {
         sFXSource.PlayOneShot(sfx);
+    }
+
+    public void SettingSFXVolume()
+    {
+        float volume = sFXSlider.value;
+        audioMixer.SetFloat("sFX", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("sFXVolume", volume);
+    }
+
+    public void SettingMusicVolume()
+    {
+        float volume = musicSlider.value;
+        audioMixer.SetFloat("music", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("musicVolume", volume);
+    }
+
+    private void VolumeLoader()
+    {
+        musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
+        SettingMusicVolume();
+
+    }
+
+    private void SFXVolumeLoader()
+    {
+        sFXSlider.value = PlayerPrefs.GetFloat("sFXVolume");
+        SettingSFXVolume();
     }
 }

@@ -68,6 +68,10 @@ public class GameMechanic : MonoBehaviour
         StartCoroutine(ChosingContainer(container));
         isAcceptedToPlay = true;
         isAcceptedToClick = false;
+        for (int i = 1; i <= 12; i++)
+        {
+            GameObject.Find("Container (" + i + ")").GetComponent<Spawner>().isTheFirstTimePlaying = false;
+        }
     }
 
     IEnumerator ChosingContainer(GameObject container)
