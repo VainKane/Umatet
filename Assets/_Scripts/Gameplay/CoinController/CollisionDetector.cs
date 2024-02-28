@@ -9,18 +9,10 @@ public class CollisionDetector : MonoBehaviour
     private bool isCounted;
     GameObject obj;
 
-    // Start is called before the first frame update
     void Start()
     {
         obj = gameObject;
         isCounted = false;
-        
-
-    }
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     void OnTriggerStay2D(Collider2D collision)

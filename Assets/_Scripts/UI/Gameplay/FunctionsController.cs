@@ -8,11 +8,15 @@ public class FunctionsController : MonoBehaviour
     [SerializeField] private GameObject settingPanel;
     [SerializeField] private GameObject settingButton;
 
+    private GameMechanic gameMechanic;
+
     // Start is called before the first frame update
     void Start()
     {
         settingPanel.SetActive(false);
         settingButton.SetActive(true);
+
+        gameMechanic = GameObject.Find("GameController").GetComponent<GameMechanic>();
     }
 
     // Update is called once per frame
@@ -43,8 +47,24 @@ public class FunctionsController : MonoBehaviour
 
     }
 
-    public void QuitGame()
+    public void SavingData()
     {
-        Application.Quit();
+        for (int i = 1; i <= 12; i++)
+        {
+            PlayerPrefs.SetInt("Container (" + i + ")'s coinsCounter", GameObject.Find("Container (" + i + ")").GetComponent<Counter>().coins.Count);
+        }
+        PlayerPrefs.SetInt("Container (b)'s coinsCounter", GameObject.Find("Container (b)").GetComponent<Counter>().coinsCounter);
+        PlayerPrefs.SetInt("Container (c)'s coinsCounter", GameObject.Find("Container (c)").GetComponent<Counter>().coinsCounter);
+        
+        PlayerPrefs.SetInt("player1Loan", gameMechanic.player1Loan);
+        PlayerPrefs.SetInt("player2Loan", gameMechanic.player2Loan);
+
+        PlayerPrefs.SetString("playerTurn", gameMechanic.playerTurn);
+
+        PlayerPrefsExtra.SetBool("isRedEnvelope1Hiden", gameMechanic.isRedEnvelope1Hiden);
+        PlayerPrefsExtra.SetBool("isRedEnvelope2Hiden", gameMechanic.isRedEnvelope2Hiden);
+
+        Debug.Log("data saved!");
+
     }
 }

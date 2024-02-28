@@ -4,29 +4,36 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-
 public class GameMechanic : MonoBehaviour
 {
     [SerializeField] private GameObject uIController;
-    [SerializeField] private GameObject redEnvelope1;
-    [SerializeField] private GameObject redEnvelope2;
+    [SerializeField] private GameObject RedEnvelope1;
+    [SerializeField] private GameObject RedEnvelope2;
+
 
     [HideInInspector] public KeyCode keyIncreasingContainerSequence;
     [HideInInspector] public KeyCode keyDecreasingContainerSequence;
+
     [HideInInspector] public int player1CoinsInHandCounter;
     [HideInInspector] public int player2CoinsInHandCounter;
+
     [HideInInspector] public int coinsCounter;
+
     [HideInInspector] public int player1Loan;
     [HideInInspector] public int player2Loan;
-    [HideInInspector] public bool isAcceptedToPlay;
-    [HideInInspector] public GameObject container;
-    [HideInInspector] public bool isPlaying;
+    
     [HideInInspector] public string playerTurn;
+    [HideInInspector] public GameObject container;
+
+    [HideInInspector] public bool isAcceptedToPlay;
+    [HideInInspector] public bool isPlaying;
     [HideInInspector] public bool isAcceptedToClick;
+    [HideInInspector] static public bool isPlayingSavedGame;
+
+    [HideInInspector] public bool isRedEnvelope1Hiden;
+    [HideInInspector] public bool isRedEnvelope2Hiden;
 
     private List<GameObject> coins;
-    private bool isredEnvelope1Hiden;
-    private bool isredEnvelope2Hiden;
     private bool isGameOver;
     private string earnedCoins;
     private float delayTime;
@@ -36,7 +43,6 @@ public class GameMechanic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerTurn = "player 1";
         delayTime = 0.37f;
         isPlaying = false;
         isAcceptedToPlay = false;
@@ -44,23 +50,45 @@ public class GameMechanic : MonoBehaviour
         player1CoinsInHandCounter = 0;
         player2CoinsInHandCounter = 0;
 
-        isredEnvelope1Hiden = false;
-        isredEnvelope2Hiden = false;
-
         isAcceptedToClick = true;
         isGameOver = false;
 
-        player1Loan = 0;
-        player2Loan = 0;
-
         uIController = GameObject.Find("UIController");
         audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
+
+        isPlayingSavedGame = PlayerPrefsExtra.GetBool("isPlayingSavedGame");
+
+        if (isPlayingSavedGame == false)
+        {
+            playerTurn = "player 1";
+
+            isRedEnvelope1Hiden = false;
+            isRedEnvelope2Hiden = false;
+
+            player1Loan = 0;
+            player2Loan = 0;
+        }
+        else
+        {
+            playerTurn = PlayerPrefs.GetString("playerTurn");
+
+            isRedEnvelope1Hiden = PlayerPrefsExtra.GetBool("isRedEnvelope1Hiden");
+            isRedEnvelope2Hiden = PlayerPrefsExtra.GetBool("isRedEnvelope2Hiden");
+
+            player1Loan = PlayerPrefs.GetInt("player1Loan");
+            player2Loan = PlayerPrefs.GetInt("player2Loan");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         AttributesUpdater();
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            GameObject.Find("Container (b)").GetComponent<Spawner>().CoinsDestroyer();
+        }
     }
 
     public void PlayerClickReceiver(GameObject container)
@@ -68,10 +96,7 @@ public class GameMechanic : MonoBehaviour
         StartCoroutine(ChosingContainer(container));
         isAcceptedToPlay = true;
         isAcceptedToClick = false;
-        for (int i = 1; i <= 12; i++)
-        {
-            GameObject.Find("Container (" + i + ")").GetComponent<Spawner>().isTheFirstTimePlaying = false;
-        }
+        Spawner.isTheFirstTimePlaying = false;
     }
 
     IEnumerator ChosingContainer(GameObject container)
@@ -123,13 +148,13 @@ public class GameMechanic : MonoBehaviour
     {
         if (containerName == "Container (6)")
         {
-            isredEnvelope1Hiden = true;
-            redEnvelope1.SetActive(false);
+            isRedEnvelope1Hiden = true;
+            RedEnvelope1.SetActive(false);
         }
         else
         {
-            isredEnvelope2Hiden = true;
-            redEnvelope2.SetActive(false);
+            isRedEnvelope2Hiden = true;
+            RedEnvelope2.SetActive(false);
         }
 
         uIController.GetComponent<DisplayOnlyUIController>().messangePanel.SetActive(true);
@@ -151,7 +176,7 @@ public class GameMechanic : MonoBehaviour
 
         for (int i = 0; i < value; i++)
         {
-            GameObject.Find(earnedCoins).GetComponent<Spawner>().CoinsEarner();
+            GameObject.Find(earnedCoins).GetComponent<Spawner>().CoinsSpawner();
         }
         audioController.PlayingSFX(audioController.earningCoin);
 
@@ -164,7 +189,7 @@ public class GameMechanic : MonoBehaviour
         for (int i = 0; i < earnedCoinsList.Count; i++)
         {
             Destroy(earnedCoinsList[i]);
-            GameObject.Find(earnedCoins).GetComponent<Spawner>().CoinsEarner();
+            GameObject.Find(earnedCoins).GetComponent<Spawner>().CoinsSpawner();
         }
         earnedCoinsList.Clear();
     }
@@ -176,11 +201,11 @@ public class GameMechanic : MonoBehaviour
         {
             if (earnedContainerSequence == 6)
             {
-                if (isredEnvelope1Hiden == false)
+                if (isRedEnvelope1Hiden == false)
                 {
                     if (GameObject.Find("Container (6)").GetComponent<Counter>().coins.Count >= 5)
                     {
-                        yield return new WaitForSeconds(0.37f);
+                        yield return new WaitForSeconds(delayTime);
                         StartCoroutine(RedEnvelopeEarner("Container (6)"));
                         CoinsEarner(earnedCoinsList);
                         yield return new WaitForSeconds(7.1f);
@@ -193,13 +218,13 @@ public class GameMechanic : MonoBehaviour
             }
             else if (earnedContainerSequence == 12)
             {
-                if (isredEnvelope2Hiden == false)
+                if (isRedEnvelope2Hiden == false)
                 {
-                    if (isredEnvelope2Hiden == false)
+                    if (isRedEnvelope2Hiden == false)
                     {
                         if (GameObject.Find("Container (12)").GetComponent<Counter>().coins.Count >= 5)
                         {
-                            yield return new WaitForSeconds(0.37f);
+                            yield return new WaitForSeconds(delayTime);
                             StartCoroutine(RedEnvelopeEarner("Container (12)"));
                             CoinsEarner(earnedCoinsList);
                             yield return new WaitForSeconds(7.1f);
@@ -227,12 +252,12 @@ public class GameMechanic : MonoBehaviour
 
                 if (GameObject.Find("Container (" + (earnedContainerSequence + 1) + ")").GetComponent<Counter>().coins.Count == 0)
                 {
-                    yield return new WaitForSeconds(0.37f);
+                    yield return new WaitForSeconds(delayTime);
                     NextContainerChecker(earnedContainerSequence + 1, moveChoice);
                 }
                 else
                 {
-                    StartCoroutine(PlayerTurnChanger(playerTurn));
+                    StartCoroutine(PlayerTurnChanger());
                 }
             }
             if (moveChoice == "go down")
@@ -244,18 +269,18 @@ public class GameMechanic : MonoBehaviour
 
                 if (GameObject.Find("Container (" + (earnedContainerSequence - 1) + ")").GetComponent<Counter>().coins.Count == 0)
                 {
-                    yield return new WaitForSeconds(0.37f);
+                    yield return new WaitForSeconds(delayTime);
                     NextContainerChecker(earnedContainerSequence - 1, moveChoice);
                 }
                 else
                 {
-                    StartCoroutine(PlayerTurnChanger(playerTurn));
+                    StartCoroutine(PlayerTurnChanger());
                 }
             }
         }
         else
         {
-            StartCoroutine(PlayerTurnChanger(playerTurn));
+            StartCoroutine(PlayerTurnChanger());
         }
     }
 
@@ -272,7 +297,7 @@ public class GameMechanic : MonoBehaviour
                 for (int n = 0; n < GameObject.Find("Container (" + i + ")").GetComponent<Counter>().coins.Count; n++)
                 {
                     Destroy(GameObject.Find("Container (" + i + ")").GetComponent<Counter>().coins[n]);
-                    GameObject.Find("Container (c)").GetComponent<Spawner>().CoinsEarner();
+                    GameObject.Find("Container (c)").GetComponent<Spawner>().CoinsSpawner();
                 }
                 GameObject.Find("Container (" + i + ")").GetComponent<Counter>().coins.Clear();
 
@@ -282,7 +307,7 @@ public class GameMechanic : MonoBehaviour
                 for (int n = 0; n < GameObject.Find("Container (" + i + ")").GetComponent<Counter>().coins.Count; n++)
                 {
                     Destroy(GameObject.Find("Container (" + i + ")").GetComponent<Counter>().coins[n]);
-                    GameObject.Find("Container (b)").GetComponent<Spawner>().CoinsEarner();
+                    GameObject.Find("Container (b)").GetComponent<Spawner>().CoinsSpawner();
 
                 }
                 GameObject.Find("Container (" + i + ")").GetComponent<Counter>().coins.Clear();
@@ -345,7 +370,7 @@ public class GameMechanic : MonoBehaviour
 
                 for (int i = 0; i < (5 - amountOfCoins); i++)
                 {
-                    GameObject.Find(earnedCoins).GetComponent<Spawner>().CoinsEarner();
+                    GameObject.Find(earnedCoins).GetComponent<Spawner>().CoinsSpawner();
                 }
                 yield return new WaitForSeconds(0.85f);
 
@@ -370,9 +395,9 @@ public class GameMechanic : MonoBehaviour
         isAcceptedToClick = true;
     }
 
-    IEnumerator PlayerTurnChanger(string playerTurn)
+    IEnumerator PlayerTurnChanger()
     {
-        yield return new WaitForSeconds(0.37f);
+        yield return new WaitForSeconds(delayTime);
         StartCoroutine(GameOverChecker());
 
         player2CoinsInHandCounter = 0;
@@ -576,7 +601,7 @@ public class GameMechanic : MonoBehaviour
         }
         else if (nextContainerSequence == 6 || nextContainerSequence == 12)
         {
-            StartCoroutine(PlayerTurnChanger(playerTurn));
+            StartCoroutine(PlayerTurnChanger());
         }
         else
         {

@@ -16,7 +16,7 @@ public class DisplayOnlyUIController : MonoBehaviour
     [SerializeField] private GameObject gameController;
 
     [Header("OtherFunctions")]
-    [SerializeField] GameObject redFlag;
+    [SerializeField] GameObject RedFlag;
     [SerializeField] private GameObject blueFlag;
     [SerializeField] private Text player1Infomation;
     [SerializeField] private Text player2Infomation;
@@ -37,16 +37,16 @@ public class DisplayOnlyUIController : MonoBehaviour
 
         gameOverPanel.SetActive(false);
 
-        redFlag.SetActive(false);
+        RedFlag.SetActive(false);
         blueFlag.SetActive(true);
         selection.SetActive(false);
 
         messangePanel.SetActive(false);
 
-        player1Name = "Vain_Kane";
-        player2Name = "Vain_Kaya";
-
         winnerAnimation = winner.GetComponent<Animator>();
+
+        player1Name = PlayerPrefs.GetString("player1Name");
+        player2Name = PlayerPrefs.GetString("player2Name");
     }
 
     // Update is called once per frame
@@ -86,12 +86,12 @@ public class DisplayOnlyUIController : MonoBehaviour
     {
         if (playerTurn == "player 2")
         {
-            redFlag.SetActive(true);
+            RedFlag.SetActive(true);
             blueFlag.SetActive(false);
         }
         if (playerTurn == "player 1")
         {
-            redFlag.SetActive(false);
+            RedFlag.SetActive(false);
             blueFlag.SetActive(true);
         }
     }

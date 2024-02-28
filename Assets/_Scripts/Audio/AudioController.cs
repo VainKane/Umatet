@@ -19,6 +19,7 @@ public class AudioController : MonoBehaviour
     public AudioClip simpleLove;
     public AudioClip summertime;
     public AudioClip bubbleTea;
+    public AudioClip halzion;
 
     [Header("SFX")]
     public AudioClip coinDrop;
@@ -30,7 +31,7 @@ public class AudioController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(PlayingRandomInGameMusic(new List<AudioClip> { cook, hotMilk, simpleLove, summertime, bubbleTea }));
+        StartCoroutine(PlayingRandomInGameMusic(new List<AudioClip> { cook, hotMilk, simpleLove, summertime, bubbleTea, halzion }));
         
         if (PlayerPrefs.HasKey("musicVolume") == true)
         {

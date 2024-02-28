@@ -6,7 +6,7 @@ using System;
 
 public class Counter : MonoBehaviour
 {
-    public Text txtCoinCounter;
+    public Text txtCoinsCounter;
     public List<GameObject> coins;
 
     public int coinsCounter;
@@ -16,18 +16,21 @@ public class Counter : MonoBehaviour
     void Start()
     {
         obj = gameObject;
-        coinsCounter = 0;
+        txtCoinsCounter.text = Convert.ToString(coins.Count);
+
     }
     // Update is called once per frame
     void Update()
     {
         if (obj.name != "Container (b)" && obj.name != "Container (c)")
         {
-            txtCoinCounter.text = Convert.ToString(coins.Count);
+            txtCoinsCounter.text = Convert.ToString(coins.Count);
         }
         else
         {
-            txtCoinCounter.text = Convert.ToString(coinsCounter);
+            txtCoinsCounter.text = Convert.ToString(coinsCounter);
         }
     }
+
+
 }

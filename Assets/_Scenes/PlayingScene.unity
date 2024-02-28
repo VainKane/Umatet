@@ -754,7 +754,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f4aa2f578c2784782719b94dd39479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTheFirstTimePlaying: 0
   coinPrefab: {fileID: 953557172476822195, guid: d90de1acaa6be6143b5c64a4b9216de4, type: 3}
 --- !u!114 &175856170
 MonoBehaviour:
@@ -768,7 +767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a904386c60ee6344c94aa071c1a3757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtCoinCounter: {fileID: 471474806}
+  txtCoinsCounter: {fileID: 471474806}
   coins: []
   coinsCounter: 0
 --- !u!114 &175856171
@@ -1295,7 +1294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f4aa2f578c2784782719b94dd39479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTheFirstTimePlaying: 0
   coinPrefab: {fileID: 953557172476822195, guid: d90de1acaa6be6143b5c64a4b9216de4, type: 3}
 --- !u!114 &270279292
 MonoBehaviour:
@@ -1309,7 +1307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a904386c60ee6344c94aa071c1a3757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtCoinCounter: {fileID: 213280470}
+  txtCoinsCounter: {fileID: 213280470}
   coins: []
   coinsCounter: 0
 --- !u!114 &270279293
@@ -1526,7 +1524,7 @@ MonoBehaviour:
   player1ScoreText: {fileID: 586569211}
   player2ScoreText: {fileID: 163143277}
   gameController: {fileID: 435925031}
-  redFlag: {fileID: 589075893}
+  RedFlag: {fileID: 589075893}
   blueFlag: {fileID: 1496171463}
   player1Infomation: {fileID: 266707697}
   player2Infomation: {fileID: 552075650}
@@ -1600,7 +1598,7 @@ RectTransform:
   - {fileID: 1069581765}
   - {fileID: 973282260}
   - {fileID: 416974544}
-  - {fileID: 728125155}
+  - {fileID: 753654285}
   m_Father: {fileID: 2011610175}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1720,7 +1718,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f4aa2f578c2784782719b94dd39479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTheFirstTimePlaying: 0
   coinPrefab: {fileID: 953557172476822195, guid: d90de1acaa6be6143b5c64a4b9216de4, type: 3}
 --- !u!114 &380906194
 MonoBehaviour:
@@ -1734,7 +1731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a904386c60ee6344c94aa071c1a3757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtCoinCounter: {fileID: 572371410}
+  txtCoinsCounter: {fileID: 572371410}
   coins: []
   coinsCounter: 0
 --- !u!114 &380906195
@@ -2162,8 +2159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uIController: {fileID: 299863627}
-  redEnvelope1: {fileID: 889092032}
-  redEnvelope2: {fileID: 1039074854}
+  RedEnvelope1: {fileID: 889092032}
+  RedEnvelope2: {fileID: 1039074854}
   keyIncreasingContainerSequence: 0
   keyDecreasingContainerSequence: 0
   player1CoinsInHandCounter: 0
@@ -2171,11 +2168,13 @@ MonoBehaviour:
   coinsCounter: 0
   player1Loan: 0
   player2Loan: 0
-  isAcceptedToPlay: 0
-  container: {fileID: 0}
-  isPlaying: 0
   playerTurn: 
+  container: {fileID: 0}
+  isAcceptedToPlay: 0
+  isPlaying: 0
   isAcceptedToClick: 0
+  isRedEnvelope1Hiden: 0
+  isRedEnvelope2Hiden: 0
 --- !u!1 &441895912
 GameObject:
   m_ObjectHideFlags: 0
@@ -2646,7 +2645,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f4aa2f578c2784782719b94dd39479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTheFirstTimePlaying: 0
   coinPrefab: {fileID: 953557172476822195, guid: d90de1acaa6be6143b5c64a4b9216de4, type: 3}
 --- !u!114 &523097966
 MonoBehaviour:
@@ -2660,7 +2658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a904386c60ee6344c94aa071c1a3757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtCoinCounter: {fileID: 1837899599}
+  txtCoinsCounter: {fileID: 1837899599}
   coins: []
   coinsCounter: 0
 --- !u!114 &523097968
@@ -3592,7 +3590,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f4aa2f578c2784782719b94dd39479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTheFirstTimePlaying: 0
   coinPrefab: {fileID: 953557172476822195, guid: d90de1acaa6be6143b5c64a4b9216de4, type: 3}
 --- !u!114 &694822561
 MonoBehaviour:
@@ -3606,7 +3603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a904386c60ee6344c94aa071c1a3757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtCoinCounter: {fileID: 1357133250}
+  txtCoinsCounter: {fileID: 1357133250}
   coins: []
   coinsCounter: 0
 --- !u!114 &694822562
@@ -3757,7 +3754,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &728125154
+--- !u!1 &753654284
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3765,26 +3762,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 728125155}
-  - component: {fileID: 728125159}
-  - component: {fileID: 728125158}
-  - component: {fileID: 728125157}
-  - component: {fileID: 728125156}
+  - component: {fileID: 753654285}
+  - component: {fileID: 753654288}
+  - component: {fileID: 753654287}
+  - component: {fileID: 753654286}
+  - component: {fileID: 753654289}
   m_Layer: 5
-  m_Name: ExitButton
+  m_Name: SavingButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &728125155
+--- !u!224 &753654285
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728125154}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 753654284}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3794,37 +3791,16 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 41.3, y: -36.2}
+  m_AnchoredPosition: {x: 41.1, y: -36.2}
   m_SizeDelta: {x: 22, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &728125156
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728125154}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 701f08cc2c45331439380a741a37757b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &728125157
+--- !u!114 &753654286
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728125154}
+  m_GameObject: {fileID: 753654284}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -3858,13 +3834,13 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 728125158}
+  m_TargetGraphic: {fileID: 753654287}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 299863630}
         m_TargetAssemblyTypeName: FunctionsController, Assembly-CSharp
-        m_MethodName: QuitGame
+        m_MethodName: SavingData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3874,13 +3850,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &728125158
+--- !u!114 &753654287
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728125154}
+  m_GameObject: {fileID: 753654284}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -3894,7 +3870,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5dd33f11e8167c446a709ddd9d9a5544, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8f7a18b0a44970f49a1a5d90e479d441, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -3904,14 +3880,35 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!222 &728125159
+--- !u!222 &753654288
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728125154}
+  m_GameObject: {fileID: 753654284}
   m_CullTransparentMesh: 1
+--- !u!95 &753654289
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753654284}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: db533914396716e4dbf8c084f77cd7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &788683549
 GameObject:
   m_ObjectHideFlags: 0
@@ -4818,7 +4815,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f4aa2f578c2784782719b94dd39479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTheFirstTimePlaying: 0
   coinPrefab: {fileID: 953557172476822195, guid: d90de1acaa6be6143b5c64a4b9216de4, type: 3}
 --- !u!114 &1024818275
 MonoBehaviour:
@@ -4832,7 +4828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a904386c60ee6344c94aa071c1a3757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtCoinCounter: {fileID: 1578584904}
+  txtCoinsCounter: {fileID: 1578584904}
   coins: []
   coinsCounter: 0
 --- !u!114 &1024818276
@@ -5558,7 +5554,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f4aa2f578c2784782719b94dd39479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTheFirstTimePlaying: 0
   coinPrefab: {fileID: 953557172476822195, guid: d90de1acaa6be6143b5c64a4b9216de4, type: 3}
 --- !u!114 &1233526323
 MonoBehaviour:
@@ -5572,7 +5567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a904386c60ee6344c94aa071c1a3757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtCoinCounter: {fileID: 575445826}
+  txtCoinsCounter: {fileID: 575445826}
   coins: []
   coinsCounter: 0
 --- !u!114 &1233526324
@@ -5784,7 +5779,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f4aa2f578c2784782719b94dd39479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTheFirstTimePlaying: 0
   coinPrefab: {fileID: 953557172476822195, guid: d90de1acaa6be6143b5c64a4b9216de4, type: 3}
 --- !u!114 &1246208472
 MonoBehaviour:
@@ -5798,7 +5792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a904386c60ee6344c94aa071c1a3757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtCoinCounter: {fileID: 1740682115}
+  txtCoinsCounter: {fileID: 1740682115}
   coins: []
   coinsCounter: 0
 --- !u!114 &1246208473
@@ -6291,7 +6285,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f4aa2f578c2784782719b94dd39479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTheFirstTimePlaying: 0
   coinPrefab: {fileID: 953557172476822195, guid: d90de1acaa6be6143b5c64a4b9216de4, type: 3}
 --- !u!114 &1326412369
 MonoBehaviour:
@@ -6305,7 +6298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a904386c60ee6344c94aa071c1a3757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtCoinCounter: {fileID: 1271137930}
+  txtCoinsCounter: {fileID: 1271137930}
   coins: []
   coinsCounter: 0
 --- !u!114 &1326412370
@@ -6905,7 +6898,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f4aa2f578c2784782719b94dd39479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTheFirstTimePlaying: 0
   coinPrefab: {fileID: 953557172476822195, guid: d90de1acaa6be6143b5c64a4b9216de4, type: 3}
 --- !u!114 &1365454094
 MonoBehaviour:
@@ -6919,7 +6911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a904386c60ee6344c94aa071c1a3757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtCoinCounter: {fileID: 1723240786}
+  txtCoinsCounter: {fileID: 1723240786}
   coins: []
   coinsCounter: 0
 --- !u!114 &1365454095
@@ -7347,7 +7339,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f4aa2f578c2784782719b94dd39479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTheFirstTimePlaying: 0
   coinPrefab: {fileID: 953557172476822195, guid: d90de1acaa6be6143b5c64a4b9216de4, type: 3}
 --- !u!114 &1454858700
 MonoBehaviour:
@@ -7361,7 +7352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a904386c60ee6344c94aa071c1a3757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtCoinCounter: {fileID: 33157193}
+  txtCoinsCounter: {fileID: 33157193}
   coins: []
   coinsCounter: 0
 --- !u!114 &1454858701
@@ -8131,6 +8122,7 @@ MonoBehaviour:
   simpleLove: {fileID: 8300000, guid: d38b8fd7dd2fb894e86ff0ff8bedecb6, type: 3}
   summertime: {fileID: 8300000, guid: 340f351c2cc8b0841869d94b404a6f93, type: 3}
   bubbleTea: {fileID: 8300000, guid: c5959b015c21fd744889bf590f316963, type: 3}
+  halzion: {fileID: 8300000, guid: 41aae6fd7115b7346bbfac4458e91693, type: 3}
   coinDrop: {fileID: 8300000, guid: 2fda1366cb8469343b0f38804b0acc62, type: 3}
   pickingCoin: {fileID: 8300000, guid: 8ae838f90c7b726459f0f3723c05e083, type: 3}
   earningCoin: {fileID: 8300000, guid: c6114d004e333444b948fbb75d80d146, type: 3}
@@ -8318,7 +8310,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f4aa2f578c2784782719b94dd39479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTheFirstTimePlaying: 0
   coinPrefab: {fileID: 953557172476822195, guid: d90de1acaa6be6143b5c64a4b9216de4, type: 3}
 --- !u!114 &1742833692
 MonoBehaviour:
@@ -8332,7 +8323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a904386c60ee6344c94aa071c1a3757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtCoinCounter: {fileID: 924538533}
+  txtCoinsCounter: {fileID: 924538533}
   coins: []
   coinsCounter: 0
 --- !u!114 &1742833693
@@ -8909,7 +8900,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f4aa2f578c2784782719b94dd39479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTheFirstTimePlaying: 0
   coinPrefab: {fileID: 953557172476822195, guid: d90de1acaa6be6143b5c64a4b9216de4, type: 3}
 --- !u!114 &2024999780
 MonoBehaviour:
@@ -8923,7 +8913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a904386c60ee6344c94aa071c1a3757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtCoinCounter: {fileID: 840189249}
+  txtCoinsCounter: {fileID: 840189249}
   coins: []
   coinsCounter: 0
 --- !u!114 &2024999781
@@ -9135,7 +9125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f4aa2f578c2784782719b94dd39479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTheFirstTimePlaying: 0
   coinPrefab: {fileID: 953557172476822195, guid: d90de1acaa6be6143b5c64a4b9216de4, type: 3}
 --- !u!114 &2061484563
 MonoBehaviour:
@@ -9149,7 +9138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a904386c60ee6344c94aa071c1a3757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtCoinCounter: {fileID: 441895914}
+  txtCoinsCounter: {fileID: 441895914}
   coins: []
   coinsCounter: 0
 --- !u!114 &2061484564

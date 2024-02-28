@@ -15,7 +15,8 @@ public class Spawner : MonoBehaviour
 
     private float radius;
 
-    [HideInInspector] public bool isTheFirstTimePlaying;
+    [HideInInspector] static public bool isTheFirstTimePlaying;
+    [HideInInspector] static public bool isPlayingSavedGame;
 
     [SerializeField] private GameObject coinPrefab;
     private AudioController audioController;
@@ -26,6 +27,8 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+
         isTheFirstTimePlaying = true;
 
         audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
@@ -42,6 +45,8 @@ public class Spawner : MonoBehaviour
         minY = buttonPosY - radius;
         maxY = buttonPosY + radius;
 
+        isPlayingSavedGame = PlayerPrefsExtra.GetBool("isPlayingSavedGame");
+
         if (obj.name == "Container (b)" || obj.name == "Container (c)")
         {
             minX = buttonPosX - 150;
@@ -56,58 +61,37 @@ public class Spawner : MonoBehaviour
             minY = buttonPosY - 120;
             maxY = buttonPosY + 120;
         }
-
-        else
+        else if (isPlayingSavedGame == false)
         {
             for (int i = 0; i < 5; i++)
             {
                 CoinsSpawner();
             }
         }
-
+        if (isPlayingSavedGame == true)
+        {
+            for (int i = 0; i < PlayerPrefs.GetInt(obj.name + "'s coinsCounter"); i++)
+            {
+                CoinsSpawner();
+            }
+        }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void CoinsSpawner()
     {
-        if (obj.name == "Container (b)" || obj.name == "Container (c)")
-        {
-            Debug.LogError("Container (b) and Container (c) shouldn't use this method");
-        }
-        else
-        {
-            coinPosition = new Vector2(UnityEngine.Random.Range(minX, maxX), UnityEngine.Random.Range(minY, maxY));
+        coinPosition = new Vector2(UnityEngine.Random.Range(minX, maxX), UnityEngine.Random.Range(minY, maxY));
 
-            GameObject uiInstance = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
-            uiInstance.transform.SetParent(transform);
+        GameObject uiInstance = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
+        uiInstance.transform.SetParent(transform);
 
-            if (isTheFirstTimePlaying == false)
+        if (isTheFirstTimePlaying == false)
+        {
+            if (obj.name != "Container (b)" && obj.name != "Container (c)")
             {
                 audioController.PlayingSFX(audioController.coinDrop);
             }
         }
-    }
 
-    public void CoinsEarner()
-    {
-        if (obj.name == "Container (b)" || obj.name == "Container (c)")
-        {
-            coinPosition = new Vector2(UnityEngine.Random.Range(minX, maxX), UnityEngine.Random.Range(minY, maxY));
-
-            GameObject uiInstance = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
-            uiInstance.transform.SetParent(transform);
-
-            obj.GetComponent<Counter>().coinsCounter += 1;
-        }
-        else
-        {
-            Debug.LogError("Only 'Container (b)' and 'Container (c)' can use 'CoinsEarner'");
-        }
+        obj.GetComponent<Counter>().coinsCounter += 1;
     }
 
     public void CoinsDestroyer()
@@ -120,7 +104,7 @@ public class Spawner : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Only 'Container (b)' and 'Container (c)' can use 'CoinsEarner'");
+            Debug.LogError("Only 'Container (b)' and 'Container (c)' can use 'CoinsEarner'!");
         }
 
     }
