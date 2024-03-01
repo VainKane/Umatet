@@ -78,6 +78,7 @@ public class GameMechanic : MonoBehaviour
             player1Loan = PlayerPrefs.GetInt("player1Loan");
             player2Loan = PlayerPrefs.GetInt("player2Loan");
         }
+
     }
 
     // Update is called once per frame
@@ -85,10 +86,12 @@ public class GameMechanic : MonoBehaviour
     {
         AttributesUpdater();
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            GameObject.Find("Container (b)").GetComponent<Spawner>().CoinsDestroyer();
-        }
+    }
+
+    private void IsBotTurn()
+    {
+        StartCoroutine(ChosingContainer(GameObject.Find("Container (" + UnityEngine.Random.Range(7, 11) + ")")));
+
     }
 
     public void PlayerClickReceiver(GameObject container)
@@ -405,11 +408,19 @@ public class GameMechanic : MonoBehaviour
 
         if (playerTurn == "player 1")
         {
-            this.playerTurn = "player 2";
-            if (isGameOver == false)
+            if (PlayerPrefsExtra.GetBool("isOnBot") == true)
             {
-                StartCoroutine(EmptyContainersChecker(this.playerTurn));
+                IsBotTurn();
             }
+            else
+            {
+                this.playerTurn = "player 2";
+                if (isGameOver == false)
+                {
+                    StartCoroutine(EmptyContainersChecker(this.playerTurn));
+                }
+            }
+            
         }
         else
         {

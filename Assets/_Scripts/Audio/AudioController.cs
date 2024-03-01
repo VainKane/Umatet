@@ -14,7 +14,6 @@ public class AudioController : MonoBehaviour
     [SerializeField] private Slider sFXSlider;
 
     [Header("Ingame Music")]
-    public AudioClip cook;
     public AudioClip hotMilk;
     public AudioClip simpleLove;
     public AudioClip summertime;
@@ -31,7 +30,7 @@ public class AudioController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(PlayingRandomInGameMusic(new List<AudioClip> { cook, hotMilk, simpleLove, summertime, bubbleTea, halzion }));
+        StartCoroutine(PlayingRandomInGameMusic(new List<AudioClip> { hotMilk, simpleLove, summertime, bubbleTea, halzion }));
         
         if (PlayerPrefs.HasKey("musicVolume") == true)
         {

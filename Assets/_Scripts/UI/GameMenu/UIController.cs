@@ -9,6 +9,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private InputField player1Input;
     [SerializeField] private InputField player2Input;
     [SerializeField] private GameObject gameSettingsPanel;
+    [SerializeField] private Toggle botToggle;
 
     // Start is called before the first frame update
     void Start()
@@ -60,10 +61,12 @@ public class UIController : MonoBehaviour
     {
         PlayerPrefs.SetString("player1Name", player1Input.text);
         PlayerPrefs.SetString("player2Name", player2Input.text);
+        PlayerPrefsExtra.SetBool("isOnBot", botToggle.isOn);
     }
 
     public void ClosingGameSettingsPanel()
     {
         gameSettingsPanel.SetActive(false);
     }
+
 }
