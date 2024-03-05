@@ -16,7 +16,6 @@ public class Spawner : MonoBehaviour
     private float radius;
 
     [HideInInspector] static public bool isTheFirstTimePlaying;
-    [HideInInspector] static public bool isPlayingSavedGame;
 
     [SerializeField] private GameObject coinPrefab;
     private AudioController audioController;
@@ -45,8 +44,6 @@ public class Spawner : MonoBehaviour
         minY = buttonPosY - radius;
         maxY = buttonPosY + radius;
 
-        isPlayingSavedGame = PlayerPrefsExtra.GetBool("isPlayingSavedGame");
-
         if (obj.name == "Container (b)" || obj.name == "Container (c)")
         {
             minX = buttonPosX - 150;
@@ -61,14 +58,14 @@ public class Spawner : MonoBehaviour
             minY = buttonPosY - 120;
             maxY = buttonPosY + 120;
         }
-        else if (isPlayingSavedGame == false)
+        else if (PlayerPrefsExtra.GetBool("isPlayingSavedGame") == false)
         {
             for (int i = 0; i < 5; i++)
             {
                 CoinsSpawner();
             }
         }
-        if (isPlayingSavedGame == true)
+        if (PlayerPrefsExtra.GetBool("isPlayingSavedGame") == true)
         {
             for (int i = 0; i < PlayerPrefs.GetInt(obj.name + "'s coinsCounter"); i++)
             {

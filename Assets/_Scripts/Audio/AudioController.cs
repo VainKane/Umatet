@@ -14,11 +14,13 @@ public class AudioController : MonoBehaviour
     [SerializeField] private Slider sFXSlider;
 
     [Header("Ingame Music")]
+    public AudioClip cook;
     public AudioClip hotMilk;
     public AudioClip simpleLove;
     public AudioClip summertime;
     public AudioClip bubbleTea;
     public AudioClip halzion;
+    public AudioClip wrapMeInPlastic;
 
     [Header("SFX")]
     public AudioClip coinDrop;
@@ -30,7 +32,11 @@ public class AudioController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(PlayingRandomInGameMusic(new List<AudioClip> { hotMilk, simpleLove, summertime, bubbleTea, halzion }));
+<<<<<<< HEAD
+        StartCoroutine(PlayingRandomInGameMusic(new List<AudioClip> { hotMilk, simpleLove, summertime, bubbleTea, halzion, wrapMeInPlastic }));
+=======
+        StartCoroutine(PlayingRandomInGameMusic(new List<AudioClip> { cook, hotMilk, simpleLove, summertime, bubbleTea, halzion }));
+>>>>>>> parent of 93ec8fa (2/9.2024, code with vain!)
         
         if (PlayerPrefs.HasKey("musicVolume") == true)
         {

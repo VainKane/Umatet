@@ -4217,6 +4217,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -8117,12 +8118,12 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 8d4f2bdfc219a874bbab0488b520bced, type: 2}
   musicSlider: {fileID: 1382722218}
   sFXSlider: {fileID: 585700020}
-  cook: {fileID: 8300000, guid: de994692c2efbde40bf9482eaca392a0, type: 3}
   hotMilk: {fileID: 8300000, guid: bc908e94c9de7424b89197130b4db09c, type: 3}
   simpleLove: {fileID: 8300000, guid: d38b8fd7dd2fb894e86ff0ff8bedecb6, type: 3}
   summertime: {fileID: 8300000, guid: 340f351c2cc8b0841869d94b404a6f93, type: 3}
   bubbleTea: {fileID: 8300000, guid: c5959b015c21fd744889bf590f316963, type: 3}
   halzion: {fileID: 8300000, guid: 41aae6fd7115b7346bbfac4458e91693, type: 3}
+  wrapMeInPlastic: {fileID: 8300000, guid: e25db2b3df52b614bbb041ad82cac5e6, type: 3}
   coinDrop: {fileID: 8300000, guid: 2fda1366cb8469343b0f38804b0acc62, type: 3}
   pickingCoin: {fileID: 8300000, guid: 8ae838f90c7b726459f0f3723c05e083, type: 3}
   earningCoin: {fileID: 8300000, guid: c6114d004e333444b948fbb75d80d146, type: 3}
