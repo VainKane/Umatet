@@ -30,7 +30,10 @@ public class ButtonController : MonoBehaviour
                 {
                     if (gameMechanic.playerTurn == "player 2")
                     {
-                        gameMechanic.PlayerClickReceiver(obj);
+                        if (PlayerPrefsExtra.GetBool("isOnBot") == false)
+                        {
+                            gameMechanic.PlayerClickReceiver(obj);
+                        }
                     }
                 }
                 if (obj.name == "Container (1)" || obj.name == "Container (2)" || obj.name == "Container (3)" || obj.name == "Container (4)" || obj.name == "Container (5)")

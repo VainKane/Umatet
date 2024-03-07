@@ -21,7 +21,7 @@ public class GameMechanic : MonoBehaviour
 
     [HideInInspector] public int player1Loan;
     [HideInInspector] public int player2Loan;
-    
+
     [HideInInspector] public string playerTurn;
     [HideInInspector] public GameObject container;
 
@@ -56,9 +56,7 @@ public class GameMechanic : MonoBehaviour
         uIController = GameObject.Find("UIController");
         audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
 
-        isPlayingSavedGame = PlayerPrefsExtra.GetBool("isPlayingSavedGame");
-
-        if (isPlayingSavedGame == false)
+        if (PlayerPrefsExtra.GetBool("isPlayingSavedGame") == false)
         {
             playerTurn = "player 1";
 
@@ -88,9 +86,45 @@ public class GameMechanic : MonoBehaviour
 
     }
 
-    private void IsBotTurn()
+    private IEnumerator WhenBotTurn()
     {
-        StartCoroutine(ChosingContainer(GameObject.Find("Container (" + UnityEngine.Random.Range(7, 11) + ")")));
+        int emptyContainersCounter = 0;
+        List<int> checkedContainersSequence = new List<int> { };
+
+    chosingContainer:
+        int containerSequence = UnityEngine.Random.Range(7, 12);
+        if (checkedContainersSequence.Contains(containerSequence) == false)
+        {
+            checkedContainersSequence.Add(containerSequence);
+            if (GameObject.Find("Container (" + containerSequence + ")").GetComponent<Counter>().coins.Count > 0)
+            {
+                yield return new WaitForSeconds(delayTime);
+                StartCoroutine(ChosingContainer(GameObject.Find("Container (" + containerSequence + ")")));
+            }
+            else
+            {
+                emptyContainersCounter += 1;
+                goto chosingContainer;
+            }
+        }
+        else
+        {
+            if (emptyContainersCounter == 5)
+            {
+                StartCoroutine(EmptyContainersChecker("player 2"));
+                yield return new WaitForSeconds(2);
+                StartCoroutine(ChosingContainer(GameObject.Find("Container (" + containerSequence + ")")));
+            }
+            else
+            {
+                goto chosingContainer;
+
+            }
+        }
+        yield return new WaitForSeconds(delayTime);
+
+        List<string> moveChoices = new List<string> { "go up", "go down" };
+        StartCoroutine(UsingTurn(false, moveChoices[UnityEngine.Random.Range(0, 1)], ContainerSequenceGetter(container.name), player2CoinsInHandCounter));
 
     }
 
@@ -100,6 +134,7 @@ public class GameMechanic : MonoBehaviour
         isAcceptedToPlay = true;
         isAcceptedToClick = false;
         Spawner.isTheFirstTimePlaying = false;
+        AttributesUpdater();
     }
 
     IEnumerator ChosingContainer(GameObject container)
@@ -145,6 +180,45 @@ public class GameMechanic : MonoBehaviour
             keyIncreasingContainerSequence = KeyCode.RightArrow;
             keyDecreasingContainerSequence = KeyCode.LeftArrow;
         }
+    }
+
+    IEnumerator PlayerTurnChanger()
+    {
+        yield return new WaitForSeconds(delayTime);
+        StartCoroutine(GameOverChecker());
+
+        player2CoinsInHandCounter = 0;
+        player1CoinsInHandCounter = 0;
+
+        if (isGameOver == false)
+        {
+            if (playerTurn == "player 1")
+            {
+                this.playerTurn = "player 2";
+
+                if (PlayerPrefsExtra.GetBool("isOnBot") == true)
+                {
+                    StartCoroutine(WhenBotTurn());
+                }
+                else
+                {
+                    StartCoroutine(EmptyContainersChecker(this.playerTurn));
+                }
+
+            }
+            else
+            {
+                this.playerTurn = "player 1";
+                StartCoroutine(EmptyContainersChecker(this.playerTurn));
+
+            }
+
+
+            uIController.GetComponent<DisplayOnlyUIController>().PlayerTurnUpdater(this.playerTurn);
+            isPlaying = false;
+            isAcceptedToClick = true;
+        }
+
     }
 
     IEnumerator RedEnvelopeEarner(string containerName)
@@ -339,11 +413,19 @@ public class GameMechanic : MonoBehaviour
             lastContainerSequence = 11;
 
         }
-        else
+        else if (playerTurn == "player 1")
         {
             earnedCoins = "Container (c)";
             firstContainerSequence = 1;
             lastContainerSequence = 5;
+        }
+        else
+        {
+            Debug.LogError("Error! " + playerTurn + "is not legal");
+            firstContainerSequence = -99;
+            lastContainerSequence = -99;
+            earnedCoins = "???";
+
         }
 
         int amountOfEmptyContainers = 0;
@@ -398,45 +480,7 @@ public class GameMechanic : MonoBehaviour
         isAcceptedToClick = true;
     }
 
-    IEnumerator PlayerTurnChanger()
-    {
-        yield return new WaitForSeconds(delayTime);
-        StartCoroutine(GameOverChecker());
-
-        player2CoinsInHandCounter = 0;
-        player1CoinsInHandCounter = 0;
-
-        if (playerTurn == "player 1")
-        {
-            if (PlayerPrefsExtra.GetBool("isOnBot") == true)
-            {
-                IsBotTurn();
-            }
-            else
-            {
-                this.playerTurn = "player 2";
-                if (isGameOver == false)
-                {
-                    StartCoroutine(EmptyContainersChecker(this.playerTurn));
-                }
-            }
-            
-        }
-        else
-        {
-            this.playerTurn = "player 1";
-            if (isGameOver == false)
-            {
-                StartCoroutine(EmptyContainersChecker(this.playerTurn));
-            }
-        }
-
-        uIController.GetComponent<DisplayOnlyUIController>().PlayerTurnUpdater(this.playerTurn);
-        isPlaying = false;
-        isAcceptedToClick = true;
-    }
-
-    public int ContainerSequenceCalculator(string containerName)
+    public int ContainerSequenceGetter(string containerName)
     {
         containerName = containerName.Substring(11);
         int containerSequence = Convert.ToInt16(containerName.Remove(containerName.LastIndexOf(")")));
