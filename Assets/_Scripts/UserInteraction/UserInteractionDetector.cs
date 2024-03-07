@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class UserInteractionDetector : MonoBehaviour
 {
-    private GameMechanic gameMechanic;
+    [SerializeField] private GameObject gameController;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameMechanic = GameObject.Find("GameController").GetComponent<GameMechanic>();
+        gameController = GameObject.Find("GameController");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameMechanic.isAcceptedToPlay == true)
+        if (gameController.GetComponent<GameMechanic>().isAcceptedToPlay == true)
         {
-            if (Input.GetKeyDown(gameMechanic.keyIncreasingContainerSequence))
+            if (Input.GetKeyDown(gameController.GetComponent<GameMechanic>().keyIncreasingContainerSequence))
             {
-                StartCoroutine(gameMechanic.UsingTurn(false, "go up", gameMechanic.ContainerSequenceGetter(gameMechanic.container.name), gameMechanic.coinsCounter));
+                StartCoroutine(gameController.GetComponent<GameMechanic>().UsingTurn(false, "go up", gameController.GetComponent<GameMechanic>().ContainerSequenceCalculator(gameController.GetComponent<GameMechanic>().container.name), gameController.GetComponent<GameMechanic>().coinsCounter));
             }
-            if (Input.GetKey(gameMechanic.keyDecreasingContainerSequence))
+            if (Input.GetKey(gameController.GetComponent<GameMechanic>().keyDecreasingContainerSequence))
             {
-                StartCoroutine(gameMechanic.UsingTurn(false, "go down", gameMechanic.ContainerSequenceGetter(gameMechanic.container.name), gameMechanic.coinsCounter));
+                StartCoroutine(gameController.GetComponent<GameMechanic>().UsingTurn(false, "go down", gameController.GetComponent<GameMechanic>().ContainerSequenceCalculator(gameController.GetComponent<GameMechanic>().container.name), gameController.GetComponent<GameMechanic>().coinsCounter));
             }
         }
     }

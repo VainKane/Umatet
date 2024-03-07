@@ -21,7 +21,7 @@ public class GameMechanic : MonoBehaviour
 
     [HideInInspector] public int player1Loan;
     [HideInInspector] public int player2Loan;
-
+    
     [HideInInspector] public string playerTurn;
     [HideInInspector] public GameObject container;
 
@@ -56,7 +56,9 @@ public class GameMechanic : MonoBehaviour
         uIController = GameObject.Find("UIController");
         audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
 
-        if (PlayerPrefsExtra.GetBool("isPlayingSavedGame") == false)
+        isPlayingSavedGame = PlayerPrefsExtra.GetBool("isPlayingSavedGame");
+
+        if (isPlayingSavedGame == false)
         {
             playerTurn = "player 1";
 
@@ -76,6 +78,7 @@ public class GameMechanic : MonoBehaviour
             player1Loan = PlayerPrefs.GetInt("player1Loan");
             player2Loan = PlayerPrefs.GetInt("player2Loan");
         }
+
     }
 
     // Update is called once per frame
@@ -83,55 +86,12 @@ public class GameMechanic : MonoBehaviour
     {
         AttributesUpdater();
 
-<<<<<<< HEAD
     }
 
-    private IEnumerator WhenBotTurn()
+    private void IsBotTurn()
     {
-        int emptyContainersCounter = 0;
-        List<int> checkedContainersSequence = new List<int> { };
+        StartCoroutine(ChosingContainer(GameObject.Find("Container (" + UnityEngine.Random.Range(7, 11) + ")")));
 
-    chosingContainer:
-        int containerSequence = UnityEngine.Random.Range(7, 12);
-        if (checkedContainersSequence.Contains(containerSequence) == false)
-        {
-            checkedContainersSequence.Add(containerSequence);
-            if (GameObject.Find("Container (" + containerSequence + ")").GetComponent<Counter>().coins.Count > 0)
-            {
-                yield return new WaitForSeconds(delayTime);
-                StartCoroutine(ChosingContainer(GameObject.Find("Container (" + containerSequence + ")")));
-            }
-            else
-            {
-                emptyContainersCounter += 1;
-                goto chosingContainer;
-            }
-        }
-        else
-        {
-            if (emptyContainersCounter == 5)
-            {
-                StartCoroutine(EmptyContainersChecker("player 2"));
-                yield return new WaitForSeconds(2);
-                StartCoroutine(ChosingContainer(GameObject.Find("Container (" + containerSequence + ")")));
-            }
-            else
-            {
-                goto chosingContainer;
-
-            }
-        }
-        yield return new WaitForSeconds(delayTime);
-
-        List<string> moveChoices = new List<string> { "go up", "go down" };
-        StartCoroutine(UsingTurn(false, moveChoices[UnityEngine.Random.Range(0, 1)], ContainerSequenceGetter(container.name), player2CoinsInHandCounter));
-
-=======
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            GameObject.Find("Container (b)").GetComponent<Spawner>().CoinsDestroyer();
-        }
->>>>>>> parent of 93ec8fa (2/9.2024, code with vain!)
     }
 
     public void PlayerClickReceiver(GameObject container)
@@ -140,7 +100,6 @@ public class GameMechanic : MonoBehaviour
         isAcceptedToPlay = true;
         isAcceptedToClick = false;
         Spawner.isTheFirstTimePlaying = false;
-        AttributesUpdater();
     }
 
     IEnumerator ChosingContainer(GameObject container)
@@ -186,45 +145,6 @@ public class GameMechanic : MonoBehaviour
             keyIncreasingContainerSequence = KeyCode.RightArrow;
             keyDecreasingContainerSequence = KeyCode.LeftArrow;
         }
-    }
-
-    IEnumerator PlayerTurnChanger()
-    {
-        yield return new WaitForSeconds(delayTime);
-        StartCoroutine(GameOverChecker());
-
-        player2CoinsInHandCounter = 0;
-        player1CoinsInHandCounter = 0;
-
-        if (isGameOver == false)
-        {
-            if (playerTurn == "player 1")
-            {
-                this.playerTurn = "player 2";
-
-                if (PlayerPrefsExtra.GetBool("isOnBot") == true)
-                {
-                    StartCoroutine(WhenBotTurn());
-                }
-                else
-                {
-                    StartCoroutine(EmptyContainersChecker(this.playerTurn));
-                }
-
-            }
-            else
-            {
-                this.playerTurn = "player 1";
-                StartCoroutine(EmptyContainersChecker(this.playerTurn));
-
-            }
-
-
-            uIController.GetComponent<DisplayOnlyUIController>().PlayerTurnUpdater(this.playerTurn);
-            isPlaying = false;
-            isAcceptedToClick = true;
-        }
-
     }
 
     IEnumerator RedEnvelopeEarner(string containerName)
@@ -419,19 +339,11 @@ public class GameMechanic : MonoBehaviour
             lastContainerSequence = 11;
 
         }
-        else if (playerTurn == "player 1")
+        else
         {
             earnedCoins = "Container (c)";
             firstContainerSequence = 1;
             lastContainerSequence = 5;
-        }
-        else
-        {
-            Debug.LogError("Error! " + playerTurn + "is not legal");
-            firstContainerSequence = -99;
-            lastContainerSequence = -99;
-            earnedCoins = "???";
-
         }
 
         int amountOfEmptyContainers = 0;
@@ -486,9 +398,6 @@ public class GameMechanic : MonoBehaviour
         isAcceptedToClick = true;
     }
 
-<<<<<<< HEAD
-    public int ContainerSequenceGetter(string containerName)
-=======
     IEnumerator PlayerTurnChanger()
     {
         yield return new WaitForSeconds(delayTime);
@@ -499,11 +408,19 @@ public class GameMechanic : MonoBehaviour
 
         if (playerTurn == "player 1")
         {
-            this.playerTurn = "player 2";
-            if (isGameOver == false)
+            if (PlayerPrefsExtra.GetBool("isOnBot") == true)
             {
-                StartCoroutine(EmptyContainersChecker(this.playerTurn));
+                IsBotTurn();
             }
+            else
+            {
+                this.playerTurn = "player 2";
+                if (isGameOver == false)
+                {
+                    StartCoroutine(EmptyContainersChecker(this.playerTurn));
+                }
+            }
+            
         }
         else
         {
@@ -520,7 +437,6 @@ public class GameMechanic : MonoBehaviour
     }
 
     public int ContainerSequenceCalculator(string containerName)
->>>>>>> parent of 93ec8fa (2/9.2024, code with vain!)
     {
         containerName = containerName.Substring(11);
         int containerSequence = Convert.ToInt16(containerName.Remove(containerName.LastIndexOf(")")));
