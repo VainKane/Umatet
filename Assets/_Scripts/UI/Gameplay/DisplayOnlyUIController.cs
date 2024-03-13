@@ -24,8 +24,8 @@ public class DisplayOnlyUIController : MonoBehaviour
     [SerializeField] private GameObject winner;
     public GameObject selection;
 
-    [HideInInspector] public string player1Name;
-    [HideInInspector] public string player2Name;
+    internal string player1Name;
+    internal string player2Name;
 
     private Animator winnerAnimation;
 

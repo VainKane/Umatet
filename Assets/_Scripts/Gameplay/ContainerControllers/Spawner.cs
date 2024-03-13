@@ -15,13 +15,15 @@ public class Spawner : MonoBehaviour
 
     private float radius;
 
-    [HideInInspector] static public bool isTheFirstTimePlaying;
+    static internal bool isTheFirstTimePlaying;
 
     [SerializeField] private GameObject coinPrefab;
     private AudioController audioController;
 
     Vector2 coinPosition;
     GameObject obj;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +39,7 @@ public class Spawner : MonoBehaviour
         buttonPosX = obj.transform.position.x;
         buttonPosY = obj.transform.position.y;
 
-        radius = 65f;
+        radius = 0.66f;
 
         minX = buttonPosX - radius;
         maxX = buttonPosX + radius;
@@ -46,17 +48,17 @@ public class Spawner : MonoBehaviour
 
         if (obj.name == "Container (b)" || obj.name == "Container (c)")
         {
-            minX = buttonPosX - 150;
-            maxX = buttonPosX + 150;
-            minY = buttonPosY - 50;
-            maxY = buttonPosY + 50;
+            minX = buttonPosX - 1.6f;
+            maxX = buttonPosX + 1.6f;
+            minY = buttonPosY - 0.4f;
+            maxY = buttonPosY + 0.4f;
         }
         else if (obj.name == "Container (6)" || obj.name == "Container (12)")
         {
-            minX = buttonPosX - 55;
-            maxX = buttonPosX + 55;
-            minY = buttonPosY - 120;
-            maxY = buttonPosY + 120;
+            minX = buttonPosX - radius - 1f;
+            maxX = buttonPosX + radius - 1f;
+            minY = buttonPosY - 1.53f;
+            maxY = buttonPosY + 1.53f;
         }
         else if (PlayerPrefsExtra.GetBool("isPlayingSavedGame") == false)
         {
@@ -79,6 +81,7 @@ public class Spawner : MonoBehaviour
 
         GameObject uiInstance = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
         uiInstance.transform.SetParent(transform);
+        uiInstance.transform.localScale = new Vector3(0.25f, 0.25f, 0);
 
         if (isTheFirstTimePlaying == false)
         {

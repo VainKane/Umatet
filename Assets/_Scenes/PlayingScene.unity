@@ -2422,6 +2422,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2446,8 +2447,8 @@ Camera:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 3
+  m_BackGroundColor: {r: 1, g: 0.98823535, b: 0.76470596, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2495,6 +2496,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cedf71f2392dbd4cbe77976f52a88fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSize: 0
+  maxSize: 0
 --- !u!1 &523097960
 GameObject:
   m_ObjectHideFlags: 0
@@ -4209,7 +4224,7 @@ Canvas:
   m_GameObject: {fileID: 880580628}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -6182,7 +6197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a658f74af2c41ac4ca33fd93fe1dcebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameController: {fileID: 435925031}
 --- !u!1 &1326412364
 GameObject:
   m_ObjectHideFlags: 0
@@ -8124,6 +8138,8 @@ MonoBehaviour:
   bubbleTea: {fileID: 8300000, guid: c5959b015c21fd744889bf590f316963, type: 3}
   halzion: {fileID: 8300000, guid: 41aae6fd7115b7346bbfac4458e91693, type: 3}
   wrapMeInPlastic: {fileID: 8300000, guid: e25db2b3df52b614bbb041ad82cac5e6, type: 3}
+  haVuongConNang: {fileID: 8300000, guid: b8ded688eecc3ec4fac49e42637822c3, type: 3}
+  lanterns: {fileID: 8300000, guid: 833061e1bf0d0d149a7ecbd239e036e3, type: 3}
   coinDrop: {fileID: 8300000, guid: 2fda1366cb8469343b0f38804b0acc62, type: 3}
   pickingCoin: {fileID: 8300000, guid: 8ae838f90c7b726459f0f3723c05e083, type: 3}
   earningCoin: {fileID: 8300000, guid: c6114d004e333444b948fbb75d80d146, type: 3}

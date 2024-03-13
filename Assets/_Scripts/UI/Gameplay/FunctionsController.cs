@@ -19,11 +19,6 @@ public class FunctionsController : MonoBehaviour
         gameMechanic = GameObject.Find("GameController").GetComponent<GameMechanic>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void UsingSettingPanel()
     {

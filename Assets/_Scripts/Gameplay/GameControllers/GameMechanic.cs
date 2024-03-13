@@ -10,28 +10,26 @@ public class GameMechanic : MonoBehaviour
     [SerializeField] private GameObject RedEnvelope1;
     [SerializeField] private GameObject RedEnvelope2;
 
+    internal KeyCode keyIncreasingContainerSequence;
+    internal KeyCode keyDecreasingContainerSequence;
 
-    [HideInInspector] public KeyCode keyIncreasingContainerSequence;
-    [HideInInspector] public KeyCode keyDecreasingContainerSequence;
+    internal int player1CoinsInHandCounter;
+    internal int player2CoinsInHandCounter;
 
-    [HideInInspector] public int player1CoinsInHandCounter;
-    [HideInInspector] public int player2CoinsInHandCounter;
+    internal int coinsCounter;
 
-    [HideInInspector] public int coinsCounter;
+    internal int player1Loan;
+    internal int player2Loan;
 
-    [HideInInspector] public int player1Loan;
-    [HideInInspector] public int player2Loan;
+    internal string playerTurn;
+    internal GameObject container;
 
-    [HideInInspector] public string playerTurn;
-    [HideInInspector] public GameObject container;
+    internal bool isAcceptedToPlay;
+    internal bool isPlaying;
+    internal bool isAcceptedToClick;
 
-    [HideInInspector] public bool isAcceptedToPlay;
-    [HideInInspector] public bool isPlaying;
-    [HideInInspector] public bool isAcceptedToClick;
-    [HideInInspector] static public bool isPlayingSavedGame;
-
-    [HideInInspector] public bool isRedEnvelope1Hiden;
-    [HideInInspector] public bool isRedEnvelope2Hiden;
+    internal bool isRedEnvelope1Hiden;
+    internal bool isRedEnvelope2Hiden;
 
     private List<GameObject> coins;
     private bool isGameOver;
@@ -47,14 +45,26 @@ public class GameMechanic : MonoBehaviour
         isPlaying = false;
         isAcceptedToPlay = false;
 
-        player1CoinsInHandCounter = 0;
-        player2CoinsInHandCounter = 0;
-
         isAcceptedToClick = true;
         isGameOver = false;
 
         uIController = GameObject.Find("UIController");
         audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
+
+        LoadingData();
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        AttributesUpdater();
+    }
+
+    private void LoadingData()
+    {
+        player1CoinsInHandCounter = 0;
+        player2CoinsInHandCounter = 0;
 
         if (PlayerPrefsExtra.GetBool("isPlayingSavedGame") == false)
         {
@@ -76,14 +86,6 @@ public class GameMechanic : MonoBehaviour
             player1Loan = PlayerPrefs.GetInt("player1Loan");
             player2Loan = PlayerPrefs.GetInt("player2Loan");
         }
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        AttributesUpdater();
-
     }
 
     private IEnumerator WhenBotTurn()
@@ -98,7 +100,7 @@ public class GameMechanic : MonoBehaviour
             checkedContainersSequence.Add(containerSequence);
             if (GameObject.Find("Container (" + containerSequence + ")").GetComponent<Counter>().coins.Count > 0)
             {
-                yield return new WaitForSeconds(delayTime);
+                yield return new WaitForSeconds(UnityEngine.Random.Range(delayTime, 5.2f));
                 StartCoroutine(ChosingContainer(GameObject.Find("Container (" + containerSequence + ")")));
             }
             else
@@ -499,12 +501,12 @@ public class GameMechanic : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
 
-        if (moveChoice == "go up")
+        if (isPlaying == false)
         {
-            if (isPlaying == false)
-            {
-                isPlaying = true;
+            isPlaying = true;
 
+            if (moveChoice == "go up")
+            {
                 for (int i = 1; i < coinsCounter + 1; i++)
                 {
                     containerSequence += 1;
@@ -532,14 +534,10 @@ public class GameMechanic : MonoBehaviour
                             {
                                 GameObject.Find("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
                                 yield return new WaitForSeconds(delayTime);
-
                             }
                         }
                         i = 9999;
-
                     }
-
-
                     else
                     {
                         if (playerTurn == "player 1")
@@ -553,28 +551,17 @@ public class GameMechanic : MonoBehaviour
 
                         GameObject.Find("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
                         yield return new WaitForSeconds(delayTime);
-
                     }
-
                 }
-
                 isPlaying = false;
+                if (containerSequence + 1 == 13)
+                {
+                    containerSequence = 0;
+                }
+                NextContainerChecker(containerSequence + 1, moveChoice);
             }
-            if (containerSequence + 1 == 13)
+            if (moveChoice == "go down")
             {
-                containerSequence = 0;
-            }
-            NextContainerChecker(containerSequence + 1, moveChoice);
-        }
-
-
-
-        if (moveChoice == "go down")
-        {
-            if (isPlaying == false)
-            {
-                isPlaying = true;
-
                 for (int i = 1; i < coinsCounter + 1; i++)
                 {
                     containerSequence -= 1;
@@ -602,11 +589,9 @@ public class GameMechanic : MonoBehaviour
                             {
                                 GameObject.Find("Container (" + containerSequence + ")").GetComponent<Spawner>().CoinsSpawner();
                                 yield return new WaitForSeconds(delayTime);
-
                             }
                         }
                         i = 9999;
-
                     }
                     else
                     {
@@ -623,12 +608,12 @@ public class GameMechanic : MonoBehaviour
                         yield return new WaitForSeconds(delayTime);
                     }
                 }
+                if (containerSequence - 1 == 0)
+                {
+                    containerSequence = 13;
+                }
+                NextContainerChecker(containerSequence - 1, moveChoice);
             }
-            if (containerSequence - 1 == 0)
-            {
-                containerSequence = 13;
-            }
-            NextContainerChecker(containerSequence - 1, moveChoice);
         }
     }
 
