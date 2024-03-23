@@ -4,25 +4,13 @@ using UnityEngine;
 
 public class CameraResolutionFit : MonoBehaviour
 {
-    private float minSize;
-    private float maxSize;
-
     Camera mainCamera;
 
     // Start is called before the first frame update
     void Start()
     {
-        minSize = 9f;
-        maxSize = 16f;
-
         mainCamera = Camera.main;
-
         MainCameraRatioFixing();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     private void MainCameraRatioFixing()

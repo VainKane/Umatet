@@ -7,15 +7,14 @@ public class FunctionsController : MonoBehaviour
 {
     [SerializeField] private GameObject settingPanel;
     [SerializeField] private GameObject settingButton;
+    [SerializeField] private GameObject notification;
 
     private GameMechanic gameMechanic;
 
     // Start is called before the first frame update
     void Start()
     {
-        settingPanel.SetActive(false);
         settingButton.SetActive(true);
-
         gameMechanic = GameObject.Find("GameController").GetComponent<GameMechanic>();
     }
 
@@ -24,11 +23,16 @@ public class FunctionsController : MonoBehaviour
     {
         settingButton.SetActive(false);
         settingPanel.SetActive(true);
+
+        GameObject.Find("SettingPanel").GetComponent<FadableObjects>().FadeIn();
     }
     public void ClosingSettingPanel()
     {
         settingButton.SetActive(true);
-        settingPanel.SetActive(false);
+        GameObject.Find("SettingPanel").GetComponent<FadableObjects>().FadeOut();
+
+
+
     }
 
     public void ReturningToHome()
@@ -59,7 +63,14 @@ public class FunctionsController : MonoBehaviour
         PlayerPrefsExtra.SetBool("isRedEnvelope1Hiden", gameMechanic.isRedEnvelope1Hiden);
         PlayerPrefsExtra.SetBool("isRedEnvelope2Hiden", gameMechanic.isRedEnvelope2Hiden);
 
-        Debug.Log("data saved!");
+        StartCoroutine(Notify());
+    }
 
+    private IEnumerator Notify()
+    {
+        notification.SetActive(true);
+        notification.GetComponent<FadableObjects>().FadeIn();
+        yield return new WaitForSeconds(Mathf.PI);
+        notification.GetComponent<FadableObjects>().FadeOut();
     }
 }

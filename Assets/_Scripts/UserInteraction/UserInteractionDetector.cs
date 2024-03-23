@@ -19,11 +19,11 @@ public class UserInteractionDetector : MonoBehaviour
         {
             if (Input.GetKeyDown(gameMechanic.keyIncreasingContainerSequence))
             {
-                StartCoroutine(gameMechanic.UsingTurn(false, "go up", gameMechanic.ContainerSequenceGetter(gameMechanic.container.name), gameMechanic.coinsCounter));
+                StartCoroutine(gameMechanic.UseTurn(false, "go up", gameMechanic.GetContainerSequence(gameMechanic.container.name), gameMechanic.coinsCounter));
             }
             if (Input.GetKey(gameMechanic.keyDecreasingContainerSequence))
             {
-                StartCoroutine(gameMechanic.UsingTurn(false, "go down", gameMechanic.ContainerSequenceGetter(gameMechanic.container.name), gameMechanic.coinsCounter));
+                StartCoroutine(gameMechanic.UseTurn(false, "go down", gameMechanic.GetContainerSequence(gameMechanic.container.name), gameMechanic.coinsCounter));
             }
         }
     }

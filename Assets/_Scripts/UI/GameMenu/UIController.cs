@@ -12,7 +12,9 @@ public class UIController : MonoBehaviour
     [SerializeField] private Toggle botToggle;
     [SerializeField] private Button newGameButton;
     [SerializeField] private Text player2Text;
-
+    [SerializeField] private GameObject notification;
+    [SerializeField] private Text notificatonText;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -32,24 +34,32 @@ public class UIController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void Playing()
     {
         gameSettingsPanel.SetActive(true);
+        gameSettingsPanel.GetComponent<FadableObjects>().FadeIn();
     }
 
 
     public void PlayingSavedGame()
     {
-        if (player1Input.text.Length > 0 && player2Input.text.Length > 0 && PlayerPrefs.HasKey("playerTurn"))
+        if (PlayerPrefs.HasKey("playerTurn") == true)
         {
-            DataSaver();
-            PlayerPrefsExtra.SetBool("isPlayingSavedGame", true);
-            SceneManager.LoadScene(1);
+            if (player1Input.text.Length > 0 && player2Input.text.Length > 0 && PlayerPrefs.HasKey("playerTurn"))
+            {
+                DataSaver();
+                PlayerPrefsExtra.SetBool("isPlayingSavedGame", true);
+                SceneManager.LoadScene(1);
+            }
+            else
+            {
+                StartCoroutine(Notify(false));
+            }
+        }
+        else
+        {
+            StartCoroutine(Notify(true));
         }
     }
 
@@ -61,6 +71,35 @@ public class UIController : MonoBehaviour
             PlayerPrefsExtra.SetBool("isPlayingSavedGame", false);
             SceneManager.LoadScene(1);
         }
+        else
+        {
+            StartCoroutine(Notify(false));
+        }
+    }
+
+    private IEnumerator Notify(bool isPlaySavedGame)
+    {
+        if (isPlaySavedGame == false)
+        {
+            if (player1Input.text.Length > 0)
+            {
+                notificatonText.text = "Please, type player 2's name";
+            }
+            else
+            {
+                notificatonText.text = "Please, type player 1's name";
+            }
+        }
+        else
+        {
+            notificatonText.text = "Cannot find any saves!";
+        }
+
+        notification.SetActive(true);
+        notification.GetComponent<FadableObjects>().FadeIn();
+        yield return new WaitForSeconds(Mathf.PI);
+        notification.SetActive(true);
+        notification.GetComponent<FadableObjects>().FadeOut();
     }
 
     private void DataSaver()
@@ -72,18 +111,19 @@ public class UIController : MonoBehaviour
 
     public void ClosingGameSettingsPanel()
     {
-        gameSettingsPanel.SetActive(false);
+        gameSettingsPanel.GetComponent<FadableObjects>().FadeOut();
     }
 
     public void CheckingPlayer2()
     {
         if (botToggle.isOn == false)
         {
-            player2Text.text = "Player 2's name:\nPlayer 2's Icon";
+            player2Text.text = "Player 2's name:\nPlayer 2's Icon:";
         }
         else
         {
-            player2Text.text = "Bot's name:\nBots Icon";
+            player2Text.text = "Bot's name:\nBot's Icon:";
         }
     }
+
 }

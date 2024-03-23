@@ -9,7 +9,7 @@ public class Counter : MonoBehaviour
     public Text txtCoinsCounter;
     public List<GameObject> coins;
 
-    public int coinsCounter;
+    internal int coinsCounter;
     private GameObject obj;
 
     // Start is called before the first frame update

@@ -23,13 +23,9 @@ public class Spawner : MonoBehaviour
     Vector2 coinPosition;
     GameObject obj;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
-
-
         isTheFirstTimePlaying = true;
 
         audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
@@ -39,26 +35,32 @@ public class Spawner : MonoBehaviour
         buttonPosX = obj.transform.position.x;
         buttonPosY = obj.transform.position.y;
 
-        radius = 0.66f;
+        radius = GameObject.Find("Place001").transform.position.x - GameObject.Find("Container (1)").transform.position.x;
+
 
         minX = buttonPosX - radius;
         maxX = buttonPosX + radius;
         minY = buttonPosY - radius;
         maxY = buttonPosY + radius;
 
-        if (obj.name == "Container (b)" || obj.name == "Container (c)")
+        if (obj.name == "Container (c)")
         {
-            minX = buttonPosX - 1.6f;
-            maxX = buttonPosX + 1.6f;
-            minY = buttonPosY - 0.4f;
-            maxY = buttonPosY + 0.4f;
+            minX = GameObject.Find("Place005").transform.position.x;
+            maxX = GameObject.Find("Place004").transform.position.x;
+            minY = GameObject.Find("Place005").transform.position.y;
+            maxY = GameObject.Find("Place004").transform.position.y;
+        }
+        else if (obj.name == "Container (b)")
+        {
+            minX = GameObject.Find("Place006").transform.position.x;
+            maxX = GameObject.Find("Place007").transform.position.x;
+            minY = GameObject.Find("Place006").transform.position.y;
+            maxY = GameObject.Find("Place007").transform.position.y;
         }
         else if (obj.name == "Container (6)" || obj.name == "Container (12)")
         {
-            minX = buttonPosX - radius - 1f;
-            maxX = buttonPosX + radius - 1f;
-            minY = buttonPosY - 1.53f;
-            maxY = buttonPosY + 1.53f;
+            minY = GameObject.Find("Place003").transform.position.y;
+            maxY = GameObject.Find("Place002").transform.position.y;
         }
         else if (PlayerPrefsExtra.GetBool("isPlayingSavedGame") == false)
         {

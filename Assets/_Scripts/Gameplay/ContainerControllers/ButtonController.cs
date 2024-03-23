@@ -32,7 +32,7 @@ public class ButtonController : MonoBehaviour
                     {
                         if (PlayerPrefsExtra.GetBool("isOnBot") == false)
                         {
-                            gameMechanic.PlayerClickReceiver(obj);
+                            gameMechanic.ReceiveClicks(obj);
                         }
                     }
                 }
@@ -40,7 +40,7 @@ public class ButtonController : MonoBehaviour
                 {
                     if (gameMechanic.playerTurn == "player 1")
                     {
-                        gameMechanic.PlayerClickReceiver(obj);
+                        gameMechanic.ReceiveClicks(obj);
                     }
                 }
             }
