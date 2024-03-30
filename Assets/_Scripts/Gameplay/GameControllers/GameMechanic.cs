@@ -61,6 +61,7 @@ public class GameMechanic : MonoBehaviour
     void Update()
     {
         //UpdateAttributes();
+
     }
 
     private void LoadData()
@@ -92,11 +93,12 @@ public class GameMechanic : MonoBehaviour
 
     private IEnumerator WhenBotTurn()
     {
+        settingButton.SetActive(false);
         sandClock.SetActive(true);
         int emptyContainersCounter = 0;
         List<int> checkedContainersSequence = new List<int> { };
 
-    chosingContainer:
+    choosingContainer:
         int containerSequence = UnityEngine.Random.Range(7, 12);
         if (checkedContainersSequence.Contains(containerSequence) == false)
         {
@@ -109,7 +111,7 @@ public class GameMechanic : MonoBehaviour
             else
             {
                 emptyContainersCounter += 1;
-                goto chosingContainer;
+                goto choosingContainer;
             }
         }
         else
@@ -117,12 +119,12 @@ public class GameMechanic : MonoBehaviour
             if (emptyContainersCounter == 5)
             {
                 StartCoroutine(CheckEmptyContainers("player 2"));
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(MathF.PI + 1);
                 StartCoroutine(ChooseContainer(GameObject.Find("Container (" + containerSequence + ")")));
             }
             else
             {
-                goto chosingContainer;
+                goto choosingContainer;
 
             }
         }
@@ -139,12 +141,12 @@ public class GameMechanic : MonoBehaviour
         isAcceptedToPlay = true;
         isAcceptedToClick = false;
         Spawner.isTheFirstTimePlaying = false;
-        settingButton.SetActive(false);
         UpdateAttributes();
     }
 
     IEnumerator ChooseContainer(GameObject container)
     {
+        settingButton.SetActive(false);
         UpdateAttributes();
         sandClock.SetActive(false);
         coins = container.GetComponent<Counter>().coins;
@@ -193,6 +195,7 @@ public class GameMechanic : MonoBehaviour
     IEnumerator ChangePlayerTurn()
     {
         yield return new WaitForSeconds(delayTime);
+        settingButton.SetActive(true);
         StartCoroutine(GameOverChecker());
 
         player2CoinsInHandCounter = 0;

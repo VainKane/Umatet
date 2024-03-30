@@ -10,12 +10,14 @@ public class FunctionsController : MonoBehaviour
     [SerializeField] private GameObject notification;
 
     private GameMechanic gameMechanic;
+    internal static bool isSettingPanelOn;
 
     // Start is called before the first frame update
     void Start()
     {
         settingButton.SetActive(true);
         gameMechanic = GameObject.Find("GameController").GetComponent<GameMechanic>();
+        isSettingPanelOn = false;
     }
 
 
@@ -23,16 +25,14 @@ public class FunctionsController : MonoBehaviour
     {
         settingButton.SetActive(false);
         settingPanel.SetActive(true);
-
+        isSettingPanelOn = true;
         GameObject.Find("SettingPanel").GetComponent<FadableObjects>().FadeIn();
     }
     public void ClosingSettingPanel()
     {
         settingButton.SetActive(true);
+        isSettingPanelOn = false;
         GameObject.Find("SettingPanel").GetComponent<FadableObjects>().FadeOut();
-
-
-
     }
 
     public void ReturningToHome()

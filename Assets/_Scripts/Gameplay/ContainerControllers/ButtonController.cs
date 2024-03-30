@@ -22,7 +22,7 @@ public class ButtonController : MonoBehaviour
 
     public void OnClick()
     {
-        if (gameMechanic.isAcceptedToClick == true)
+        if (gameMechanic.isAcceptedToClick == true && FunctionsController.isSettingPanelOn == false)
         {
             if (obj.GetComponent<Counter>().coins.Count != 0)
             {

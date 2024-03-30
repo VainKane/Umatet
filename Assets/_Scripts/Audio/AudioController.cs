@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -23,37 +24,56 @@ public class AudioController : MonoBehaviour
     public AudioClip haVuongConNang;
     public AudioClip lanterns;
 
+    [Header("GameMenu Music")]
+    public AudioClip vietnam;
+
     [Header("SFX")]
     public AudioClip coinDrop;
     public AudioClip pickingCoin;
     public AudioClip earningCoin;
     public AudioClip ping;
 
+    private List<AudioClip> musicList;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(PlayingRandomInGameMusic(new List<AudioClip> { hotMilk, simpleLove, summertime, bubbleTea, halzion, wrapMeInPlastic, lanterns, haVuongConNang }));
-        
-        if (PlayerPrefs.HasKey("musicVolume") == true)
+        if (gameObject.name == "AudioController (Menu)")
         {
-            VolumeLoader();
-            SFXVolumeLoader();
+            musicList = new List<AudioClip>() { vietnam };
+
+            if (PlayerPrefs.HasKey("musicVolume") == true)
+            {
+                LoadMusicVolume();
+            }
+            else
+            {
+                musicSlider.value = 0.56f;
+                SettingMusicVolume();
+            }
         }
         else
         {
-            SettingMusicVolume();
-            SettingSFXVolume();
+            musicList = new List<AudioClip> { hotMilk, simpleLove, summertime, bubbleTea, halzion, wrapMeInPlastic, lanterns, haVuongConNang };
+            
+            if (PlayerPrefs.HasKey("sFXVolume") == true)
+            {
+                LoadMusicVolume();
+                SFXVolumeLoader();
+            }
+            else
+            {
+                sFXSlider.value = 0.38f;
+                SettingMusicVolume();
+                SettingSFXVolume();
+            }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        
+        StartCoroutine(PlayMusic(musicList));
 
     }
-
-    IEnumerator PlayingRandomInGameMusic(List<AudioClip> musicList)
+    IEnumerator PlayMusic(List<AudioClip> musicList)
     {
     play:
         int ingameMusicSequence = Random.Range(0, musicList.Count);
@@ -82,11 +102,10 @@ public class AudioController : MonoBehaviour
         PlayerPrefs.SetFloat("musicVolume", volume);
     }
 
-    private void VolumeLoader()
+    private void LoadMusicVolume()
     {
         musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
         SettingMusicVolume();
-
     }
 
     private void SFXVolumeLoader()

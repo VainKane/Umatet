@@ -14,7 +14,13 @@ public class UIController : MonoBehaviour
     [SerializeField] private Text player2Text;
     [SerializeField] private GameObject notification;
     [SerializeField] private Text notificatonText;
-    
+    [SerializeField] private Scrollbar tutorialScrollBar;
+    [SerializeField] private GameObject tutorialPanel;
+    [SerializeField] private GameObject player1Character;
+    [SerializeField] private GameObject player2Character;
+    [SerializeField] private Text player2IconText;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +28,11 @@ public class UIController : MonoBehaviour
 
         player1Input.characterLimit = 14;
         player2Input.characterLimit = 14;
+
+        tutorialPanel.SetActive(true);
+        tutorialScrollBar.value = 1;
+        tutorialPanel.SetActive(false);
+
 
         if (PlayerPrefs.HasKey("player1Name") == true || PlayerPrefs.HasKey("player2Name") == true)
         {
@@ -107,6 +118,9 @@ public class UIController : MonoBehaviour
         PlayerPrefs.SetString("player1Name", player1Input.text);
         PlayerPrefs.SetString("player2Name", player2Input.text);
         PlayerPrefsExtra.SetBool("isOnBot", botToggle.isOn);
+
+        player1Character.GetComponent<SpriteManager>().SaveSelectedCharacterSequence();
+        player2Character.GetComponent<SpriteManager>().SaveSelectedCharacterSequence();
     }
 
     public void ClosingGameSettingsPanel()
@@ -118,12 +132,30 @@ public class UIController : MonoBehaviour
     {
         if (botToggle.isOn == false)
         {
-            player2Text.text = "Player 2's name:\nPlayer 2's Icon:";
+            player2Text.text = "Player 2's name:";
+            player2IconText.text = "Player 2's name:";
         }
         else
         {
-            player2Text.text = "Bot's name:\nBot's Icon:";
+            player2Text.text = "Bot's name:";
+            player2IconText.text = "Bot's\nicon: ";
         }
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void OpenTutorialPanel()
+    {
+        tutorialPanel.SetActive(true);
+        tutorialPanel.GetComponent<FadableObjects>().FadeIn();
+    }
+
+    public void CloseTutorialPanel()
+    {
+        tutorialPanel.GetComponent<FadableObjects>().FadeOut();
     }
 
 }
