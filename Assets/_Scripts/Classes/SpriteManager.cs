@@ -7,7 +7,7 @@ public class SpriteManager : MonoBehaviour
 {
     [SerializeField] private CharacterDataBase characterDataBase;
 
-    private int selectedCharacterSequence;
+    internal int selectedCharacterSequence;
     private GameObject obj;
 
     private void Start()
@@ -49,5 +49,10 @@ public class SpriteManager : MonoBehaviour
     public void SaveSelectedCharacterSequence()
     {
         PlayerPrefs.SetInt(obj.name, selectedCharacterSequence);
+    }
+
+    public void ChooseCharacter(int characterSequence)
+    {
+        obj.GetComponent<Image>().sprite = characterDataBase.icons[characterSequence];
     }
 }

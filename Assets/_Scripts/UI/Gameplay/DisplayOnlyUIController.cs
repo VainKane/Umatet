@@ -72,13 +72,12 @@ public class DisplayOnlyUIController : MonoBehaviour
         else if (player1Score > player2Score)
         {
             result.text = String.Concat(result.text, player1Name, "!");
-            winnerAnimation.SetFloat("playerHeadSequence", 1);
+            GameObject.Find("Winner").GetComponent<SpriteManager>().ChooseCharacter(GameObject.Find("SelectedCharacter1").GetComponent<SpriteManager>().selectedCharacterSequence);
         }
         else
         {
             result.text = String.Concat(result.text, player2Name, "!");
-            winnerAnimation.SetFloat("playerHeadSequence", 2);
-
+            GameObject.Find("Winner").GetComponent<SpriteManager>().ChooseCharacter(GameObject.Find("SelectedCharacter2").GetComponent<SpriteManager>().selectedCharacterSequence);
         }
     }
 

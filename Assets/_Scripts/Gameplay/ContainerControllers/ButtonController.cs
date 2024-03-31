@@ -7,6 +7,8 @@ public class ButtonController : MonoBehaviour
     private GameObject obj;
     private GameMechanic gameMechanic;
 
+    public static bool isTesting;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +19,6 @@ public class ButtonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     public void OnClick()

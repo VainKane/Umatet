@@ -11,7 +11,7 @@ public class GameMechanic : MonoBehaviour
     [SerializeField] private GameObject RedEnvelope1;
     [SerializeField] private GameObject RedEnvelope2;
     [SerializeField] private GameObject sandClock;
-    
+
     internal KeyCode keyIncreasingContainerSequence;
     internal KeyCode keyDecreasingContainerSequence;
 
@@ -60,7 +60,18 @@ public class GameMechanic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //UpdateAttributes();
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            for (int i = 0; i < GameObject.Find("Container (7)").GetComponent<Counter>().coins.Count; i++)
+            {
+                Destroy(GameObject.Find("Container (7)").GetComponent<Counter>().coins[i]);
+            }
+            GameObject.Find("Container (7)").GetComponent<Counter>().coins.Clear();
+
+        }
+
+
 
     }
 
@@ -280,6 +291,38 @@ public class GameMechanic : MonoBehaviour
         earnedCoinsList.Clear();
     }
 
+    // LargeContainer: Container (6) and Container (12)
+
+    bool CheckLargeContainers(int checkedContainerSequence)
+    {
+        if (checkedContainerSequence == 6)
+        {
+            if (isRedEnvelope1Hiden == true)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else if (checkedContainerSequence == 12)
+        {
+            if (isRedEnvelope2Hiden == true)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     IEnumerator EarnedContainerChecker(string moveChoice, int earnedContainerSequence)
     {
         List<GameObject> earnedCoinsList = GameObject.Find("Container (" + earnedContainerSequence + ")").GetComponent<Counter>().coins;
@@ -321,7 +364,6 @@ public class GameMechanic : MonoBehaviour
                 else
                 {
                     EarnCoins(earnedCoinsList);
-
                 }
             }
             else
@@ -338,8 +380,35 @@ public class GameMechanic : MonoBehaviour
 
                 if (GameObject.Find("Container (" + (earnedContainerSequence + 1) + ")").GetComponent<Counter>().coins.Count == 0)
                 {
-                    yield return new WaitForSeconds(delayTime);
-                    NextContainerChecker(earnedContainerSequence + 1, moveChoice);
+                    if (earnedContainerSequence == 6)
+                    {
+                        if (CheckLargeContainers(6) == true)
+                        {
+                            StartCoroutine(ChangePlayerTurn());
+                        }
+                        else
+                        {
+                            yield return new WaitForSeconds(delayTime);
+                            NextContainerChecker(earnedContainerSequence + 1, moveChoice);
+                        }
+                    }
+                    else if (earnedContainerSequence == 12)
+                    {
+                        if (CheckLargeContainers(12) == true)
+                        {
+                            StartCoroutine(ChangePlayerTurn());
+                        }
+                        else
+                        {
+                            yield return new WaitForSeconds(delayTime);
+                            NextContainerChecker(earnedContainerSequence + 1, moveChoice);
+                        }
+                    }
+                    else
+                    {
+                        yield return new WaitForSeconds(delayTime);
+                        NextContainerChecker(earnedContainerSequence + 1, moveChoice);
+                    }
                 }
                 else
                 {
@@ -355,8 +424,35 @@ public class GameMechanic : MonoBehaviour
 
                 if (GameObject.Find("Container (" + (earnedContainerSequence - 1) + ")").GetComponent<Counter>().coins.Count == 0)
                 {
-                    yield return new WaitForSeconds(delayTime);
-                    NextContainerChecker(earnedContainerSequence - 1, moveChoice);
+                    if (earnedContainerSequence == 6)
+                    {
+                        if (CheckLargeContainers(6) == true)
+                        {
+                            StartCoroutine(ChangePlayerTurn());
+                        }
+                        else
+                        {
+                            yield return new WaitForSeconds(delayTime);
+                            NextContainerChecker(earnedContainerSequence - 1, moveChoice);
+                        }
+                    }
+                    else if (earnedContainerSequence == 12)
+                    {
+                        if (CheckLargeContainers(12) == true)
+                        {
+                            StartCoroutine(ChangePlayerTurn());
+                        }
+                        else
+                        {
+                            yield return new WaitForSeconds(delayTime);
+                            NextContainerChecker(earnedContainerSequence - 1, moveChoice);
+                        }
+                    }
+                    else
+                    {
+                        yield return new WaitForSeconds(delayTime);
+                        NextContainerChecker(earnedContainerSequence - 1, moveChoice);
+                    }
                 }
                 else
                 {
@@ -369,6 +465,7 @@ public class GameMechanic : MonoBehaviour
             StartCoroutine(ChangePlayerTurn());
         }
     }
+
 
     IEnumerator GameOverChecker()
     {
