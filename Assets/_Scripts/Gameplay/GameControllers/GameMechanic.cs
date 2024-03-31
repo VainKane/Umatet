@@ -57,24 +57,6 @@ public class GameMechanic : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            for (int i = 0; i < GameObject.Find("Container (7)").GetComponent<Counter>().coins.Count; i++)
-            {
-                Destroy(GameObject.Find("Container (7)").GetComponent<Counter>().coins[i]);
-            }
-            GameObject.Find("Container (7)").GetComponent<Counter>().coins.Clear();
-
-        }
-
-
-
-    }
-
     private void LoadData()
     {
         player1CoinsInHandCounter = 0;
