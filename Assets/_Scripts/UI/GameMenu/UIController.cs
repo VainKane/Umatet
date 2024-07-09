@@ -94,11 +94,11 @@ public class UIController : MonoBehaviour
         {
             if (player1Input.text.Length > 0)
             {
-                notificatonText.text = "Please, type player 2's name";
+                notificatonText.text = "Please type player 2's name";
             }
             else
             {
-                notificatonText.text = "Please, type player 1's name";
+                notificatonText.text = "Please type player 1's name";
             }
         }
         else
